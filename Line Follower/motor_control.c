@@ -188,10 +188,13 @@ uint8_t limitDutyCycle(signed int duty){
 // Set direction for Left Motor. 0 forward, 1 backward
 void setDirectionMotorL(uint8_t dir){
 
-	if(dir){
+	if(dir)
+	{
 		setLow(PORTD, BRIDGE_A2);
 		TCCR1A &= ~(1 << 6);
-	}else{
+	}
+	else
+	{
 		setHigh(PORTD, BRIDGE_A2);	
 		TCCR1A |= 1 << 6;
 	}

@@ -17,8 +17,6 @@ uint8_t k=100;
 bool	runLineFlag=false;
 bool    runWallFlag=false;
 
-// Voltages attributed to button on the keyboard
-
 // User decided codes for directions
 #define rightButton '0'
 #define upButton '1'
@@ -54,6 +52,7 @@ char ADCReadButton(void)
 {
 	uint16_t keyboardVoltage = (int16_t)AdcConvert(0);	// get ADC value from channel ADC0
 	
+	// Voltages attributed to button on the keyboard
 	const int maxRightButtonVoltage = 100;
 	const int maxUpButtonVoltage = 300;
 	const int maxDownButtonVoltage = 500;
@@ -201,7 +200,7 @@ void subMenuRight(void)
 	LcdTask();
 	while(subButton!= centralButton)
 	{
-		subButton=getButton();
+		subButton = getButton();
 		if(subButton == upButton)
 		{
 			while(!buttonReleased());
@@ -257,8 +256,8 @@ void subMenuUp(void)
 			{
 				// do nothing
 			};
-			runLineFlag=true;
-			runWallFlag=false;
+			setRunLineFlag(true);
+			setRunWallFlag(false);
 			sprintf(menuStr2,"RunLine()");
 			LcdTask();
 			LCDGotoXY(15,0);
@@ -270,8 +269,8 @@ void subMenuUp(void)
 			{
 				// do nothing
 			};
-			runWallFlag=true;
-			runLineFlag=false;
+			setRunWallFlag(true);
+			setRunLineFlag(false);
 			sprintf(menuStr2,"RunWall()");
 			LcdTask();
 			LCDGotoXY(15,1);

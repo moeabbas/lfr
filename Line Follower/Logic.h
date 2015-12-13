@@ -7,7 +7,7 @@ void searchMode();
 
 void runLine();
 
-void go(signed int dist, uint8_t dir, uint8_t ref);
+void go(signed int dist, uint8_t dir, uint8_t currentSpeed);
 
 void setStopFlag(uint8_t flag);
 
