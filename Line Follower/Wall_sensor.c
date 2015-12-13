@@ -33,8 +33,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 // Write on display wall function number, 2nd line on LCD
-void showPlace(uint8_t value){
-	
+void showPlace(uint16_t value)
+{	
 	char buffer[20];
 	LCDGotoXY(0,1);
 	sprintf(buffer, "%02i", value);
@@ -73,14 +73,16 @@ void fullStop(void){
 
 //Makes the robot go straight forward and stop at the wall. 
 //Parameter: stop: distance (to the wall): 0-620, speed: 0-250 
-void forward_stop(uint16_t distance){
-
+void forward_stop(uint16_t distance)
+{
 	setDirectionMotorL(0);
 	setDirectionMotorR(0);
 
-	while (distance > AdcConvert(1)){
+	while (distance > AdcConvert(1))
+	{
 		showPlace(1);
-		if(getSensorUpdateFlag()){
+		if(getSensorUpdateFlag())
+		{
 			// Calculate and set new dutyCycle.
 			calcDuty(6, 0);
 			clearSensorUpdateFlag();

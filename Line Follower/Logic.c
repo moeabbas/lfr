@@ -16,6 +16,7 @@
 #include "LED_control.h"
 #include "Floor_sensor.h"
 #include "lcd.h"
+#include "ADC.h"
 #include <stdio.h>
  
 /////////////////////////////////////////////////////////////////////////
@@ -173,6 +174,17 @@ void runLine(){
 				currentSpeed = highSpeed;
 				highSpeedFlag = 2;
 			}
+			
+			if (foundLineFlag == 2)
+			{
+				uint16_t distance = AdcConvert(1);
+				showPlace(distance);
+
+				if (distance > (uint16_t)400)
+				{
+					setStopFlag(1);
+				}
+			}
 
 			// Calculate and set new duty cycle.
 			calcDuty(currentSpeed, calcFloorErrorAndFlagControl());
@@ -203,25 +215,27 @@ void go(signed int dist, uint8_t dir, uint8_t currentSpeed){
 	uint8_t finishedR = 0;
 
 	// Change direction.
-	if(dir == 0){
+	if(dir == 0)
+	{
 		setDirectionMotorL(0);
 		setDirectionMotorR(0);
 	}
-	if(dir == 1){
+	if(dir == 1)
+	{
 		setDirectionMotorL(1);
 		setDirectionMotorR(0);
-		
 	}
-	if(dir == 2){
+	if(dir == 2)
+	{
 		setDirectionMotorL(0);
 		setDirectionMotorR(1);
 	}
 		
 	// Go the distance until finished.
-	while((finishedL == 0) || (finishedR == 0)){
-	
-		if(getSensorUpdateFlag()){
-			
+	while((finishedL == 0) || (finishedR == 0))
+	{
+		if(getSensorUpdateFlag())
+		{
 			pulseCountR += getSensorMotorR();
 			pulseCountL += getSensorMotorL();
 
@@ -242,7 +256,7 @@ void go(signed int dist, uint8_t dir, uint8_t currentSpeed){
 				setDutyCycleMotorR(0);
 			}
 
-		clearSensorUpdateFlag();
+			clearSensorUpdateFlag();
 		}
 	}
 }

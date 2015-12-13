@@ -24,26 +24,12 @@ And added a missing function in runWall() function.
 MotorControl.c added a function to clear the integer sum error.
 */
 
-/*
-Update 28.12.12
-Added rainbow effect to the LED controller, uses 4 bit PWM.
-*/
+void Initialize();
 
 int main(void) {
 
-	initMotorControl();
-	initFloorSensor();
-	LCDInit(16);
-	LEDInit();
-	AdcInit();
-	USARTInit(31);
+	Initialize();
 
-	LEDEnable();
-	
-	enableHBridge();
-
-	SetInterrupt();
-	
 	while(1)
 	{
 		// Update voltage LED's
@@ -65,14 +51,21 @@ int main(void) {
 			
 			setRunWallFlag(true);
 		}
-
-		if(getRunWallFlag())
-		{
-			rainBowOn();
-			runWall();
-			setRunWallFlag(false);
-			rainBowOff();
-		}
 	}
+	
 	return 0;
 }
+
+void Initialize()
+{
+	initMotorControl();
+	initFloorSensor();
+	LCDInit(16);
+	LEDInit();
+	AdcInit();
+	USARTInit(31);
+	LEDEnable();
+	enableHBridge();
+	SetInterrupt();
+}
+

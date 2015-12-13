@@ -20,12 +20,17 @@ char ADC0Str[10];
 /******************************************************************************/
 uint16_t AdcConvert (uint8_t channel)
 {
-   ADMUX = 0x40+channel;            // use Avcc+ ref with capacitor, select channel
-   ADCSRA |= 0x50;                  // clear EOC-flag, new start conversion
-   while ((ADCSRA & 0x10) == 0);    // Waiting for conversion complete
-   return ADC;                      // Return 16 bit ADC value
+	ADMUX = (1<<REFS0) | channel; // use AVcc+ ref with capacitor, select channel
+   
+	ADCSRA |= (1<<ADSC);
+   
+	while (ADCSRA & (1<<ADSC))
+	{
+		// Waiting for conversion complete
+	};    
+   
+   return ADC; // Return 16 bit ADC value
 }
-
 
 /******************************************************************************/
 // Function name: AdcInit 
@@ -36,4 +41,5 @@ uint16_t AdcConvert (uint8_t channel)
 void AdcInit (void)
 {
    ADCSRA = 0x87;                   // enable ADC, clear EOC-flag, set clock div.
+   ADCSRA |= _BV(ADEN); 
 }

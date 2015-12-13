@@ -151,7 +151,6 @@ void disableHBridge(void){
 // Get sensor update Flag
 uint8_t getSensorUpdateFlag(){
 	return sensorUpdateFlag;
-
 }
 
 // Clear Sensor update Flag
