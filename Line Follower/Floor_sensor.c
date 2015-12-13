@@ -44,23 +44,24 @@ uint8_t readFloorSensors(){
 }
 
 // Calculates the error from floor sensor and change various flags.
-signed char calcFloorError(){
+signed char calcFloorErrorAndFlagControl(){
 
 	static uint8_t oldData = 0;
-	uint8_t data = 0;
-	
-	data = readFloorSensors();
+	uint8_t data = readFloorSensors();
 
 	// Check if on line, use new data. otherwise oldData
-	// usefull if the robot undershots a line in a turn.
+	// useful if the robot undershots a line in a turn.
 	// Checks if it was going straight before loosing the line
 	// then indicate with a LostLine flag.
 	
-	if(data != 0){
+	if(data != 0)
+	{
 		oldData = data;
 	}
-	else{
-		if((oldData == 8) || (oldData == 12) || (oldData == 24)){
+	else
+	{
+		if((oldData == 0b00001000) || (oldData == 0b00001100) || (oldData == 0b00011000))
+		{
 			setLostLineFlag(1);
 			return 0;
 		}
@@ -68,70 +69,67 @@ signed char calcFloorError(){
 	}
 
 	// Check for Line beginning, only once
-	if(getFoundLineFlag() != 2){
-		if((data & 0b0001000) && (data & 0b0010000) && (data & 0b0000100)){
+	if(getFoundLineFlag() != 2)
+	{
+		if((data & 0b0001000) && (data & 0b0010000) && (data & 0b0000100))
+		{
 			setFoundLineFlag(1);
 			return 0;
 		}
 	}
 
-	// Check for 360° mark, only once and only after Line beginning
-	if((getThreeSixtyFlag() != 2) && (getFoundLineFlag() != 0)){
-		if((data == 127) || (data == 107)){
-			setThreeSixtyFlag(1);
-		}
+	if((data == 0b01111111) || (data == 0b01110111))
+	{
+		setStopFlag(1);
 	}
 
-	// Check for High speed mark, only after 360°
-	if(getThreeSixtyFlag() == 2){
-		if((data == 124) || (data == 120)){
-			setHighSpeedFlag(1);
-		}
-	}
-
-	// Check for end line mark, only after highSpeed.
-	if(getHighSpeedFlag() == 2){
-		if((data == 127) || (data == 119)){
-			setStopFlag(1);
-		}
-	}
-	
-	if(getFoundLineFlag()){
-
+	if(getFoundLineFlag())
+	{
 		// Check Position on line.
 		// Going Right returns positive
 		// Going left returns negative.
-		if((data == 96) || (data == 64)){
+		if((data == 0b01100000) || (data == 0b01000000))
+		{
 			return 15;
 		}
-		if(data == 32){
+		if(data == 0b00100000)
+		{
 			return 13;
 		}
-		if(data == 48){
+		if(data == 0b00110000)
+		{
 			return 8;
 		}
-		if(data == 16){
+		if(data == 0b00010000)
+		{
 			return 6;
 		}		
-		if(data == 24){
+		if(data == 0b00011000)
+		{
 			return 1;
 		}
-		if(data == 8){
+		if(data == 0b00001000)
+		{
 			return 0;
 		}
-		if(data == 12){
+		if(data == 0b00001100)
+		{
 			return -1;
 		}
-		if(data == 4){
+		if(data == 0b00000100)
+		{
 			return -6;
 		}
-		if(data == 6){
+		if(data == 0b00000110)
+		{
 			return -8;
 		}
-		if(data == 2){
+		if(data == 0b00000010)
+		{
 			return -13;
 		}
-		if((data == 3) || (data == 1)){
+		if((data == 0b00000011) || (data == 0b00000001))
+		{
 			return -15;
 		}
 	}

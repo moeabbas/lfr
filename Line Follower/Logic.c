@@ -78,19 +78,19 @@ void searchMode(){
 	
 	uint8_t a = 0;
 	
-	while(1){
-		
+	while(1)
+	{
 		// Check if robot found line again.
-		if(readFloorSensors() != 0){
+		if(readFloorSensors() != 0)
+		{
 			setDirectionMotorL(0);
 			setDirectionMotorR(0);
 			break;
 		}
 
-		switch(a){
-
+		switch(a)
+		{
 			case 0:
-
 			// Drive a little bit forward.
 			go(150,0,2);
 			a = 1;
@@ -113,7 +113,6 @@ void searchMode(){
 			go(105,2,2);
 			a = 0;
 			break;
-
 		}	
 	}
 }
@@ -121,76 +120,62 @@ void searchMode(){
 // Run the IHK line
 void runLine(){
 
-	// clear Display
 	LCDClear();
 
-	// High speed MAX ~17-18.
-	static const uint8_t HIGH = 16;
-
-	// Normal speed
-	static const uint8_t NORMAL = 12;
-
-	// Slow speed
-	static const uint8_t SLOW = 6;
+	// speed MAX ~17-18.
+	static const uint8_t highSpeed = 16;
+	static const uint8_t normalSpeed = 12;
+	static const uint8_t lowSpeed = 6;
+	
+	static const uint8_t forwardDirection = 0;
 	
 	// Start speed, current speed.
-	uint8_t ref = SLOW;
+	uint8_t currentSpeed = lowSpeed;
 
-	setDirectionMotorL(0);
-	setDirectionMotorR(0);
-
-
-	// Drive the robot ~20 cm forward over the start line. 
-	if(stopFlag == 0){
-		go(500,0,ref);
-	}
+	setDirectionMotorL(forwardDirection);
+	setDirectionMotorR(forwardDirection);
 
 	// Run until end of track.
-	while(stopFlag == 0){
-
-		if(getSensorUpdateFlag()){
-
-			
+	while(stopFlag == 0)
+	{
+		if(getSensorUpdateFlag())
+		{
 			// When a line is lost after driving straight, go in search mode
-			if(lostLineFlag == 1){
+			if(lostLineFlag == 1)
+			{
 				searchMode();
 				lostLineFlag = 0;
 			}
 
-
 			// When line is found, make a Right turn
 			// Increase speed and follow the line.
-			if(foundLineFlag == 1){
-				go(150,2,SLOW);
-				setDirectionMotorL(0);
-				setDirectionMotorR(0);
-				ref = NORMAL;
+			if(foundLineFlag == 1)
+			{
+				go(150,2,lowSpeed);
+				setDirectionMotorL(forwardDirection);
+				setDirectionMotorR(forwardDirection);
+				currentSpeed = normalSpeed;
 				foundLineFlag = 2;
 			}
 
 			// 360° mark
-			if(threeSixtyFlag == 1){
-				go(1180,1,SLOW);
-				setDirectionMotorL(0);
-				setDirectionMotorR(0);
-				LEDLcdBackLightOn();
+			if(threeSixtyFlag == 1)
+			{
+				go(1180,1,lowSpeed);
+				setDirectionMotorL(forwardDirection);
+				setDirectionMotorR(forwardDirection);
 				threeSixtyFlag = 2;
-				setGreen();
 			}
 	
 			// High speed mark.
-			if(highSpeedFlag == 1){
-				ref = HIGH;
+			if(highSpeedFlag == 1)
+			{
+				currentSpeed = highSpeed;
 				highSpeedFlag = 2;
-				allOff();
-				setBlue();
 			}
 
-			// Calculate and set new dutycycle.
-			calcDuty(ref, calcFloorError());
-
-			// Update voltage LED's
-			LEDVoltage();
+			// Calculate and set new duty cycle.
+			calcDuty(currentSpeed, calcFloorErrorAndFlagControl());
 
 			clearSensorUpdateFlag();
 		}
@@ -199,9 +184,6 @@ void runLine(){
 	// Stop the robot at end mark.
 	setDutyCycleMotorL(0);
 	setDutyCycleMotorR(0);
-
-	allOff();
-	setRed();
 }
 
 // Drive the Robot certain distance or turn left/right
@@ -209,7 +191,7 @@ void runLine(){
 // dir = 0 Straight, 1 Left, 2 Right
 // ref = 0-17 Speed.
 // Does not compensate for overshoot, slow speed better.
-void go(signed int dist, uint8_t dir, uint8_t ref){
+void go(signed int dist, uint8_t dir, uint8_t currentSpeed){
 
 	// Total amount of pulses traveled.
 	int pulseCountL = 0;
@@ -247,7 +229,7 @@ void go(signed int dist, uint8_t dir, uint8_t ref){
 			error = (pulseCountL - pulseCountR)/2;
 
 			// Calculate and set new dutyCycle.
-			calcDuty(ref, error);
+			calcDuty(currentSpeed, error);
 			
 			// Finished ?
 			if(pulseCountL >= dist){

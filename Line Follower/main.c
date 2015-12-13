@@ -14,12 +14,6 @@
 #define F_CPU 10000000UL
 #include <util/delay.h>
 
-
-// David Sigurdsson // dabbis@gmail.com 
-// This code may not be used by anyone unless otherwise agreed upon.
-
-// Fully working version + menu + searchMode + minor changes.
-
 /*
 Update 19.12.12
 Floor_sensor.c changed so error calculation is inactive before finding line
@@ -34,7 +28,6 @@ MotorControl.c added a function to clear the integer sum error.
 Update 28.12.12
 Added rainbow effect to the LED controller, uses 4 bit PWM.
 */
-
 
 int main(void) {
 
@@ -51,27 +44,30 @@ int main(void) {
 
 	SetInterrupt();
 	
-	// new comment
-
-	while(1){
-	
+	while(1)
+	{
+		// Update voltage LED's
+		LEDVoltage();
+		
 		//test();
-		//searchMode();
 		
 		buttonMenu();
 
-		if(getRunLineFlag()){
+		if(getRunLineFlag())
+		{
 			runLine();
 			setRunLineFlag(false);
 
-			//Delay 3s
-			for( int i = 0; i<1000; i++){
+			for( int i = 0; i < 1000; i++)
+			{
 				_delay_ms(3);
 			}
+			
 			setRunWallFlag(true);
 		}
 
-		if(getRunWallFlag()){
+		if(getRunWallFlag())
+		{
 			rainBowOn();
 			runWall();
 			setRunWallFlag(false);
