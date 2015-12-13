@@ -44,7 +44,7 @@ uint8_t readFloorSensors(){
 }
 
 // Calculates the error from floor sensor and change various flags.
-signed char calcFloorError(){
+signed char calcFloorErrorAndFlagControl(){
 
 	static uint8_t oldData = 0;
 	uint8_t data = 0;
@@ -52,15 +52,18 @@ signed char calcFloorError(){
 	data = readFloorSensors();
 
 	// Check if on line, use new data. otherwise oldData
-	// usefull if the robot undershots a line in a turn.
+	// useful if the robot undershots a line in a turn.
 	// Checks if it was going straight before loosing the line
 	// then indicate with a LostLine flag.
 	
-	if(data != 0){
+	if(data != 0)
+	{
 		oldData = data;
 	}
-	else{
-		if((oldData == 8) || (oldData == 12) || (oldData == 24)){
+	else
+	{
+		if((oldData == 8) || (oldData == 12) || (oldData == 24))
+		{
 			setLostLineFlag(1);
 			return 0;
 		}
@@ -68,40 +71,48 @@ signed char calcFloorError(){
 	}
 
 	// Check for Line beginning, only once
-	if(getFoundLineFlag() != 2){
-		if((data & 0b0001000) && (data & 0b0010000) && (data & 0b0000100)){
+	if(getFoundLineFlag() != 2)
+	{
+		if((data & 0b0001000) && (data & 0b0010000) && (data & 0b0000100))
+		{
 			setFoundLineFlag(1);
 			return 0;
 		}
 	}
 
 	// Check for 360° mark, only once and only after Line beginning
-	if((getThreeSixtyFlag() != 2) && (getFoundLineFlag() != 0)){
+	if((getThreeSixtyFlag() != 2) && (getFoundLineFlag() != 0))
+	{
 		if((data == 127) || (data == 107)){
 			setThreeSixtyFlag(1);
 		}
 	}
 
 	// Check for High speed mark, only after 360°
-	if(getThreeSixtyFlag() == 2){
-		if((data == 124) || (data == 120)){
+	if(getThreeSixtyFlag() == 2)
+	{
+		if((data == 124) || (data == 120))
+		{
 			setHighSpeedFlag(1);
 		}
 	}
 
 	// Check for end line mark, only after highSpeed.
-	if(getHighSpeedFlag() == 2){
-		if((data == 127) || (data == 119)){
+	//if(getHighSpeedFlag() == 2)
+	//{
+		if((data == 127) || (data == 119))
+		{
 			setStopFlag(1);
 		}
-	}
+	//}
 	
-	if(getFoundLineFlag()){
-
+	if(getFoundLineFlag())
+	{
 		// Check Position on line.
 		// Going Right returns positive
 		// Going left returns negative.
-		if((data == 96) || (data == 64)){
+		if((data == 96) || (data == 64))
+		{
 			return 15;
 		}
 		if(data == 32){
@@ -131,7 +142,8 @@ signed char calcFloorError(){
 		if(data == 2){
 			return -13;
 		}
-		if((data == 3) || (data == 1)){
+		if((data == 3) || (data == 1))
+		{
 			return -15;
 		}
 	}

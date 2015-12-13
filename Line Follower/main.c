@@ -44,7 +44,10 @@ int main(void) {
 
 	SetInterrupt();
 	
-	while(1){
+	while(1)
+	{
+		// Update voltage LED's
+		LEDVoltage();
 		
 		//test();
 		

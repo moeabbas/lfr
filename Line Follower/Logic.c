@@ -78,19 +78,19 @@ void searchMode(){
 	
 	uint8_t a = 0;
 	
-	while(1){
-		
+	while(1)
+	{
 		// Check if robot found line again.
-		if(readFloorSensors() != 0){
+		if(readFloorSensors() != 0)
+		{
 			setDirectionMotorL(0);
 			setDirectionMotorR(0);
 			break;
 		}
 
-		switch(a){
-
+		switch(a)
+		{
 			case 0:
-
 			// Drive a little bit forward.
 			go(150,0,2);
 			a = 1;
@@ -113,7 +113,6 @@ void searchMode(){
 			go(105,2,2);
 			a = 0;
 			break;
-
 		}	
 	}
 }
@@ -137,18 +136,21 @@ void runLine(){
 	setDirectionMotorR(forwardDirection);
 
 	// Run until end of track.
-	while(stopFlag == 0){
-
-		if(getSensorUpdateFlag()){
+	while(stopFlag == 0)
+	{
+		if(getSensorUpdateFlag())
+		{
 			// When a line is lost after driving straight, go in search mode
-			if(lostLineFlag == 1){
+			if(lostLineFlag == 1)
+			{
 				searchMode();
 				lostLineFlag = 0;
 			}
 
 			// When line is found, make a Right turn
 			// Increase speed and follow the line.
-			if(foundLineFlag == 1){
+			if(foundLineFlag == 1)
+			{
 				go(150,2,lowSpeed);
 				setDirectionMotorL(forwardDirection);
 				setDirectionMotorR(forwardDirection);
@@ -157,28 +159,23 @@ void runLine(){
 			}
 
 			// 360° mark
-			if(threeSixtyFlag == 1){
+			if(threeSixtyFlag == 1)
+			{
 				go(1180,1,lowSpeed);
 				setDirectionMotorL(forwardDirection);
 				setDirectionMotorR(forwardDirection);
-				LEDLcdBackLightOn();
 				threeSixtyFlag = 2;
-				setGreen();
 			}
 	
 			// High speed mark.
-			if(highSpeedFlag == 1){
+			if(highSpeedFlag == 1)
+			{
 				currentSpeed = highSpeed;
 				highSpeedFlag = 2;
-				allOff();
-				setBlue();
 			}
 
 			// Calculate and set new duty cycle.
-			calcDuty(currentSpeed, calcFloorError());
-
-			// Update voltage LED's
-			LEDVoltage();
+			calcDuty(currentSpeed, calcFloorErrorAndFlagControl());
 
 			clearSensorUpdateFlag();
 		}
@@ -187,9 +184,6 @@ void runLine(){
 	// Stop the robot at end mark.
 	setDutyCycleMotorL(0);
 	setDutyCycleMotorR(0);
-
-	allOff();
-	setRed();
 }
 
 // Drive the Robot certain distance or turn left/right
