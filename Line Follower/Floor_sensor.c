@@ -44,8 +44,8 @@ uint8_t readFloorSensors(){
 }
 
 // Calculates the error from floor sensor and change various flags.
-signed char calcFloorErrorAndFlagControl(){
-
+float calcFloorErrorAndFlagControl()
+{
 	static uint8_t oldData = 0;
 	uint8_t data = readFloorSensors();
 
@@ -90,23 +90,23 @@ signed char calcFloorErrorAndFlagControl(){
 		// Going left returns negative.
 		if((data == 0b01100000) || (data == 0b01000000))
 		{
-			return 15;
+			return 30;
 		}
 		if(data == 0b00100000)
 		{
-			return 13;
+			return 26;
 		}
 		if(data == 0b00110000)
 		{
-			return 8;
+			return 16;
 		}
 		if(data == 0b00010000)
 		{
-			return 6;
+			return 12;
 		}		
 		if(data == 0b00011000)
 		{
-			return 1;
+			return 2;
 		}
 		if(data == 0b00001000)
 		{
@@ -114,23 +114,23 @@ signed char calcFloorErrorAndFlagControl(){
 		}
 		if(data == 0b00001100)
 		{
-			return -1;
+			return -2;
 		}
 		if(data == 0b00000100)
 		{
-			return -6;
+			return -12;
 		}
 		if(data == 0b00000110)
 		{
-			return -8;
+			return -16;
 		}
 		if(data == 0b00000010)
 		{
-			return -13;
+			return -26;
 		}
 		if((data == 0b00000011) || (data == 0b00000001))
 		{
-			return -15;
+			return -30;
 		}
 	}
 	return 0;

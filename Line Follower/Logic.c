@@ -27,11 +27,27 @@
 // 0 = flag not set
 // 1 = flag set.
 // 2 = flag used
-uint8_t stopFlag = 0;
-uint8_t threeSixtyFlag = 0;
-uint8_t highSpeedFlag = 0;
-uint8_t foundLineFlag = 0;
-uint8_t lostLineFlag = 0;
+
+#define FLAG_NOT_SET 0
+#define FLAG_SET     1
+#define FLAG_USED    2
+
+#define DIRECTION_STRAIGHT 0
+#define DIRECTION_LEFT     1
+#define DIRECTION_RIGHT    2
+
+// speed MAX ~17-18.
+#define SPEED_HIGH   16
+#define SPEED_NORMAL 12
+#define SPEED_LOW    6
+#define SPEED_CREEP  2
+
+#define MOTOR_FORWARD 0
+#define MOTOR_REVERSE 1
+
+uint8_t stopFlag = FLAG_NOT_SET;
+uint8_t foundLineFlag = FLAG_NOT_SET;
+uint8_t lostLineFlag = FLAG_NOT_SET;
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -40,14 +56,6 @@ uint8_t lostLineFlag = 0;
 
 void setStopFlag(uint8_t flag){
 	stopFlag = flag;
-}
-
-void setThreeSixtyFlag(uint8_t flag){
-	threeSixtyFlag = flag;
-}
-
-void setHighSpeedFlag(uint8_t flag){
-	highSpeedFlag = flag;
 }
 
 void setFoundLineFlag(uint8_t flag){
@@ -62,14 +70,6 @@ uint8_t getStopFlag(){
 	return stopFlag;
 }
 
-uint8_t getThreeSixtyFlag(){
-	return threeSixtyFlag;
-}
-
-uint8_t getHighSpeedFlag(){
-	return highSpeedFlag;
-}
-
 uint8_t getFoundLineFlag(){
 	return foundLineFlag;
 }
@@ -79,43 +79,38 @@ void searchMode(){
 	
 	uint8_t a = 0;
 	
-	while(1)
+	while(readFloorSensors() == 0)
 	{
-		// Check if robot found line again.
-		if(readFloorSensors() != 0)
-		{
-			setDirectionMotorL(0);
-			setDirectionMotorR(0);
-			break;
-		}
-
 		switch(a)
 		{
 			case 0:
 			// Drive a little bit forward.
-			go(150,0,2);
+			go(150,DIRECTION_STRAIGHT,SPEED_CREEP);
 			a = 1;
 			break;
 
 			// Scan Right.
 			case 1:
-			go(100,2,2);
+			go(100,DIRECTION_RIGHT,SPEED_CREEP);
 			a = 2;
 			break;
 
 			// Scan left
 			case 2:
-			go(200,1,2);
+			go(200,DIRECTION_LEFT,SPEED_CREEP);
 			a = 3;
 			break;
 
 			// Center again.
 			case 3:
-			go(105,2,2);
+			go(105,DIRECTION_RIGHT,SPEED_CREEP);
 			a = 0;
 			break;
 		}	
 	}
+	
+	setDirectionMotorL(0);
+	setDirectionMotorR(0);
 }
 
 // Run the IHK line
@@ -123,66 +118,44 @@ void runLine(){
 
 	LCDClear();
 
-	// speed MAX ~17-18.
-	static const uint8_t highSpeed = 16;
-	static const uint8_t normalSpeed = 12;
-	static const uint8_t lowSpeed = 6;
-	
 	static const uint8_t forwardDirection = 0;
 	
 	// Start speed, current speed.
-	uint8_t currentSpeed = lowSpeed;
+	uint8_t currentSpeed = SPEED_LOW;
 
 	setDirectionMotorL(forwardDirection);
 	setDirectionMotorR(forwardDirection);
 
 	// Run until end of track.
-	while(stopFlag == 0)
+	while(stopFlag == FLAG_NOT_SET)
 	{
 		if(getSensorUpdateFlag())
 		{
 			// When a line is lost after driving straight, go in search mode
-			if(lostLineFlag == 1)
+			if(lostLineFlag == FLAG_SET)
 			{
 				searchMode();
-				lostLineFlag = 0;
+				lostLineFlag = FLAG_NOT_SET;
 			}
 
 			// When line is found, make a Right turn
 			// Increase speed and follow the line.
-			if(foundLineFlag == 1)
+			if(foundLineFlag == FLAG_SET)
 			{
-				go(150,2,lowSpeed);
+				go(150,DIRECTION_RIGHT,SPEED_LOW);
 				setDirectionMotorL(forwardDirection);
 				setDirectionMotorR(forwardDirection);
-				currentSpeed = normalSpeed;
-				foundLineFlag = 2;
+				currentSpeed = SPEED_NORMAL;
+				foundLineFlag = FLAG_USED;
 			}
-
-			// 360° mark
-			if(threeSixtyFlag == 1)
-			{
-				go(1180,1,lowSpeed);
-				setDirectionMotorL(forwardDirection);
-				setDirectionMotorR(forwardDirection);
-				threeSixtyFlag = 2;
-			}
-	
-			// High speed mark.
-			if(highSpeedFlag == 1)
-			{
-				currentSpeed = highSpeed;
-				highSpeedFlag = 2;
-			}
-			
-			if (foundLineFlag == 2)
+		
+			if (foundLineFlag == FLAG_USED)
 			{
 				uint16_t distance = AdcConvert(1);
-				showPlace(distance);
-
-				if (distance > (uint16_t)400)
+				
+				if (distance > (uint16_t)500)
 				{
-					setStopFlag(1);
+					setStopFlag(FLAG_SET);
 				}
 			}
 
@@ -200,59 +173,59 @@ void runLine(){
 
 // Drive the Robot certain distance or turn left/right
 // dist = 1100 aprox 360°
-// dir = 0 Straight, 1 Left, 2 Right
+// direction = 0 Straight, 1 Left, 2 Right
 // ref = 0-17 Speed.
 // Does not compensate for overshoot, slow speed better.
-void go(signed int dist, uint8_t dir, uint8_t currentSpeed){
+void go(signed int distance, uint8_t direction, uint8_t currentSpeed){
 
 	// Total amount of pulses traveled.
-	int pulseCountL = 0;
-	int pulseCountR = 0;
-	signed char error = 0;
+	int pulsesTravelledLeft = 0;
+	int pulsesTravelledRight = 0;
+	signed char differenceBetweenLeftAndRightPulses = 0;
 
 	// Boolean
-	uint8_t finishedL = 0;
-	uint8_t finishedR = 0;
+	uint8_t hasLeftFinished  = false;
+	uint8_t hasRightFinished = false;
 
 	// Change direction.
-	if(dir == 0)
+	if(direction == DIRECTION_STRAIGHT)
 	{
-		setDirectionMotorL(0);
-		setDirectionMotorR(0);
+		setDirectionMotorL(MOTOR_FORWARD);
+		setDirectionMotorR(MOTOR_FORWARD);
 	}
-	if(dir == 1)
+	if(direction == DIRECTION_LEFT)
 	{
-		setDirectionMotorL(1);
-		setDirectionMotorR(0);
+		setDirectionMotorL(MOTOR_REVERSE);
+		setDirectionMotorR(MOTOR_FORWARD);
 	}
-	if(dir == 2)
+	if(direction == DIRECTION_RIGHT)
 	{
-		setDirectionMotorL(0);
-		setDirectionMotorR(1);
+		setDirectionMotorL(MOTOR_FORWARD);
+		setDirectionMotorR(MOTOR_REVERSE);
 	}
 		
 	// Go the distance until finished.
-	while((finishedL == 0) || (finishedR == 0))
+	while(hasLeftFinished == false || hasRightFinished == false)
 	{
 		if(getSensorUpdateFlag())
 		{
-			pulseCountR += getSensorMotorR();
-			pulseCountL += getSensorMotorL();
+			pulsesTravelledRight += getSensorMotorR();
+			pulsesTravelledLeft  += getSensorMotorL();
 
 			// Difference between Wheels
-			error = (pulseCountL - pulseCountR)/2;
+			differenceBetweenLeftAndRightPulses = pulsesTravelledLeft - pulsesTravelledRight;
 
 			// Calculate and set new dutyCycle.
-			calcDuty(currentSpeed, error);
+			calcDuty(currentSpeed, differenceBetweenLeftAndRightPulses);
 			
 			// Finished ?
-			if(pulseCountL >= dist){
-				finishedL = 1;
+			if(pulsesTravelledLeft >= distance){
+				hasLeftFinished = true;
 				setDutyCycleMotorL(0);
 			}
 
-			if(pulseCountR >= dist){
-				finishedR = 1;
+			if(pulsesTravelledRight >= distance){
+				hasRightFinished = true;
 				setDutyCycleMotorR(0);
 			}
 

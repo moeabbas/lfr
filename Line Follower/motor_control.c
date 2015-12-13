@@ -226,8 +226,8 @@ uint8_t getSensorMotorR(){
 void calcDuty(uint16_t ref, float error){
 	
 	// Find the error values
-	errorL = ref - (float)getSensorMotorL() - error;
-	errorR = ref - (float)getSensorMotorR() + error;
+	errorL = ref - (float)getSensorMotorL() - error / 2;
+	errorR = ref - (float)getSensorMotorR() + error / 2;
 	
 	// Anti windup
 	if((dutyL >=250) || (dutyL < 0)){

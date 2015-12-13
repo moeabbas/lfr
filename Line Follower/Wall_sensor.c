@@ -51,10 +51,10 @@ float calcWallError(void){
 	// Check Position from wall
 
 	if(adc<=150){ 
-		return 2;
+		return 4;
 	}		
 	if(adc>150){
-		return -2; 
+		return -4; 
 	}
 	return 0;
 }

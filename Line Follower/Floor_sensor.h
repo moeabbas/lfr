@@ -22,7 +22,7 @@ void initFloorSensor();
 uint8_t readFloorSensors();
 
 // Calculates the error from floor sensor and change various flags.
-signed char calcFloorErrorAndFlagControl();
+float calcFloorErrorAndFlagControl();
 
 // Write on display duty cycle for Both Motors
 // Current floor sensor values in Binary and dec
