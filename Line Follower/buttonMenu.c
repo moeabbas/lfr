@@ -1,4 +1,4 @@
-// Deliang/David Sigurdsson // dabbis@gmail.com 
+// Deliang/David Sigurdsson // dabbis@gmail.com
 // This code may not be used by anyone unless otherwise agreed upon.
 
 #include "adc.h"
@@ -17,6 +17,15 @@ uint8_t k=100;
 bool	runLineFlag=false;
 bool    runWallFlag=false;
 
+// Voltages attributed to button on the keyboard
+
+// User decided codes for directions
+#define rightButton '0'
+#define upButton '1'
+#define downButton '2'
+#define leftButton '3'
+#define centralButton '4'
+#define noButton '5'
 
 bool getRunLineFlag(){
 	return runLineFlag;
@@ -36,75 +45,73 @@ void setRunWallFlag(bool value){
 
 
 /******************************************************************************/
-// Function name: AdcReadButton 
+// Function name: AdcReadButton
 // Function task: set a char for each button been pushed or not
-// Input: 
+// Input:
 // Return: char
 /******************************************************************************/
 char ADCReadButton(void)
 {
-	 uint16_t x0 = (int16_t)AdcConvert(0);	// get ADC value from channel ADC0
-	 
-	if (x0<100)
-	{
-	 	return '0';	// right button
-     }
-	 else
-	 if (x0<300)
-	 {
-	 	return '1';	// up button
-     }
-	 else
-	 if (x0<500)
-	 {
-	 	return '2';	// down button
-     }
-	 else	
-	 if (x0<700)
-	 {
-	 	return '3';	// left button
-     }
-	 else
-	 if (x0<900)
-	 {
-	 	return '4';	// central button
-     }
-	 else
-	 if (x0>=900)
-	 {
-	 	return '5';	// no button pressed
-     }	
-     else         
+	uint16_t keyboardVoltage = (int16_t)AdcConvert(0);	// get ADC value from channel ADC0
 	
-	 return 0; // return 0 on illegal input combination
+	const int maxRightButtonVoltage = 100;
+	const int maxUpButtonVoltage = 300;
+	const int maxDownButtonVoltage = 500;
+	const int maxLeftButtonVoltage = 700;
+	const int maxCentralButtonVoltage = 900;
+	
+	if (keyboardVoltage < maxRightButtonVoltage)
+	{
+		return rightButton;
+	}
+	else if (keyboardVoltage < maxUpButtonVoltage)
+	{
+		return upButton;
+	}
+	else if (keyboardVoltage < maxDownButtonVoltage)
+	{
+		return downButton;
+	}
+	else if (keyboardVoltage < maxLeftButtonVoltage)
+	{
+		return leftButton;
+	}
+	else if (keyboardVoltage < maxCentralButtonVoltage)
+	{
+		return centralButton;
+	}
+	else
+	{
+		return noButton;
+	}
 }
 
 /******************************************************************************/
 // Function name: getButton
 // Function task: read the button, wait for stable input (twice same input)
-// Input: 
+// Input:
 // Return: ASCII value of active button, '5' for no button pushed
 /******************************************************************************/
 char getButton(void)
 {
-   static char last= '5';
-   char temp, now;
+	static char last = noButton;
+	char temp, now;
 
-   now = ADCReadButton();          // read the present input
-   if (now == last)                // test for two subsequent equal inputs
-   {
-      return now;
-   }
-   else
-   {
-      temp = last;                 // if new: store new and return the last stable
-      last = now;
-      return temp;
-   }
+	now = ADCReadButton();          // read the present input
+	if (now == last)                // test for two subsequent equal inputs
+	{
+		return now;
+	}
+	else
+	{
+		temp = last;                 // if new: store new and return the last stable
+		last = now;
+		return temp;
+	}
 }
 /******************************************************************************/
 // Function name: buttonMenu
-// Function task: create a button menu sequence, in order to control the robot manually 
+// Function task: create a button menu sequence, in order to control the robot manually
 // 				  The function is taking action on relevant buttons
 // Button functions:
 //		'0':
@@ -115,193 +122,186 @@ char getButton(void)
 /******************************************************************************/
 void buttonMenu(void)
 {
-	char button;
-	char lastButton='5';
-	button=getButton();
-		sprintf(menuStr1, "Run");
-			sprintf(menuStr2, "Parameters");
-			LcdTask();
-			LCDGotoXY(15,0);
-			LCDPutChar(1);	// display the up arrow
-			LCDGotoXY(14,1);
-			LCDPutChar(0x7F);	// display the left arrow
-			LCDGotoXY(15,1);
-			LCDPutChar(0x7E);	// display the right arrow
-	while(button!='4')
+	char lastButton = noButton;
+	char button = getButton();
+	sprintf(menuStr1, "Run");
+	sprintf(menuStr2, "Parameters");
+	LcdTask();
+	LCDGotoXY(15,0);
+	LCDPutChar(1);	// display the up arrow
+	LCDGotoXY(14,1);
+	LCDPutChar(0x7F);	// display the left arrow
+	LCDGotoXY(15,1);
+	LCDPutChar(0x7E);	// display the right arrow
+	while(button != centralButton)
 	{
 		button=getButton();
 		if(button != lastButton)
 		{
 			switch (button)
-      		{
-         		case '0' : 
-		    	
-					subMenuRight();
-            	break;
-         		case '1' :
-            		subMenuUp();
-            	break;
+			{
+				case rightButton:
+				subMenuRight();
+				break;
+				
+				case upButton:
+				subMenuUp();
+				break;
 
-         		case '2' :
-		 			subMenuDown();
-		  		break;
+				case downButton:
+				subMenuDown();
+				break;
 
-         		case '3' :
-            		subMenuLeft();
-            	break;
-              	default:  
-					
-		 		break;
+				case leftButton :
+				subMenuLeft();
+				break;
+				
+				default:
+				break;
 			}
-          
-		} 
+			
+		}
 	}
-	 
+	
 	lastButton = button;
 
 }
 bool buttonPressed(void)
 {
-	char button;
-	button=getButton();
-	if(button!='5')
+	char button = getButton();
+	if(button != noButton)
 	{
 		return true;
 	}
 	else
-	return false;
+	{
+		return false;
+	}
 }
 bool buttonReleased(void)
 {
-	char button;
-	button=getButton();
-	if(button=='5')
+	char button = getButton();
+	if(button==noButton)
 	{
 		return true;
 	}
 	else
-	return false;
+	{
+		return false;
+	}
 }
 
 void subMenuRight(void)
 {
-	char subButton;
-	char lastButton='5';
-	subButton=getButton();
+	char subButton = getButton();
+	
 	sprintf(menuStr1, "Adjust kp");
 	sprintf(menuStr2,"kp = %03d", kp);
+	
 	LcdTask();
-	while(subButton!='4')
+	while(subButton!= centralButton)
 	{
 		subButton=getButton();
-		if(subButton =='1')
+		if(subButton == upButton)
 		{
 			while(!buttonReleased());
-				kp+=1;
-            	sprintf(menuStr2,"kp = %03d", kp);
-				LcdTask();
-		 }
-		else
-		if(subButton =='2')
+			kp+=1;
+			sprintf(menuStr2,"kp = %03d", kp);
+			LcdTask();
+		}
+		else if(subButton == downButton)
 		{
 			while(!buttonReleased());
-				kp-=1;
-            	sprintf(menuStr2,"kp = %03d", kp);
-				LcdTask();
-		 }
+			kp-=1;
+			sprintf(menuStr2,"kp = %03d", kp);
+			LcdTask();
+		}
 	}
-	lastButton = subButton; 	
 }
 void subMenuLeft(void)
 {
-	char subButton;
-	char lastButton='5';
-	subButton=getButton();
+	char subButton = getButton();
 	sprintf(menuStr1, "Adjust ki");
 	sprintf(menuStr2,"ki = %03d", ki);
 	LcdTask();
-	while(subButton!='4')
+	while(subButton!=centralButton)
 	{
 		subButton=getButton();
-		if(subButton =='1')
+		if(subButton == upButton)
 		{
 			while(!buttonReleased());
-				ki+=1;
-            	sprintf(menuStr2,"ki = %03d", ki);
-				LcdTask();
-		 }
-		else
-		if(subButton =='2')
+			ki+=1;
+			sprintf(menuStr2,"ki = %03d", ki);
+			LcdTask();
+		}
+		else if(subButton == downButton)
 		{
 			while(!buttonReleased());
-				ki-=1;
-            	sprintf(menuStr2,"ki = %03d", ki);
-				LcdTask();
-		 }
+			ki-=1;
+			sprintf(menuStr2,"ki = %03d", ki);
+			LcdTask();
+		}
 	}
-	lastButton = subButton; 	
 }
 void subMenuUp(void)
 {
-	char subButton;
-	char lastButton='5';
-	subButton=getButton();
+	char subButton = getButton();
 	sprintf(menuStr1, "Run selection");
 	LcdTask();
-	while(subButton!='4')
+	while(subButton != centralButton)
 	{
-		subButton=getButton();
-		if(subButton =='1')
+		subButton = getButton();
+		if(subButton == upButton)
 		{
-			while(!buttonReleased());
-				runLineFlag=true;
-				runWallFlag=false;
-            	sprintf(menuStr2,"RunLine()");
-				LcdTask();
-				LCDGotoXY(15,0);
-				LCDPutChar(' ');	// 0x20 using empty char blanks the up arrow
-		 }
-		else
-		if(subButton =='2')
+			while(!buttonReleased())
+			{
+				// do nothing
+			};
+			runLineFlag=true;
+			runWallFlag=false;
+			sprintf(menuStr2,"RunLine()");
+			LcdTask();
+			LCDGotoXY(15,0);
+			LCDPutChar(' ');	// 0x20 using empty char blanks the up arrow
+		}
+		else if(subButton == downButton)
 		{
-			while(!buttonReleased());
-				runWallFlag=true;
-				runLineFlag=false;
-            	sprintf(menuStr2,"RunWall()");
-				LcdTask();
-				LCDGotoXY(15,1);
-				LCDPutChar(' ');	// 0x20 using empty char blanks the down arrow
-		 }   
+			while(!buttonReleased())
+			{
+				// do nothing
+			};
+			runWallFlag=true;
+			runLineFlag=false;
+			sprintf(menuStr2,"RunWall()");
+			LcdTask();
+			LCDGotoXY(15,1);
+			LCDPutChar(' ');	// 0x20 using empty char blanks the down arrow
+		}
 	}
-	lastButton = subButton; 	
 }
 void subMenuDown(void)
 {
-	char subButton;
-	char lastButton='5';
-	subButton=getButton();
-	 sprintf(menuStr1, "En_Bluetooth");
-			LcdTask();
-	while(subButton!='4')
+	char subButton = getButton();
+	sprintf(menuStr1, "En_Bluetooth");
+	LcdTask();
+	while(subButton != centralButton)
 	{
 		subButton=getButton();
-		if(subButton =='1')
+		if(subButton == upButton)
 		{
 			while(!buttonReleased());
-				k+=5;
-            	sprintf(menuStr2,"kp = %03d", k);
-				LcdTask();
-		 }
-		else
-		if(subButton =='2')
+			k+=5;
+			sprintf(menuStr2,"kp = %03d", k);
+			LcdTask();
+		}
+		else if(subButton == downButton)
 		{
 			while(!buttonReleased());
-				k-=5;
-            	sprintf(menuStr2,"kp = %03d", k);
-				LcdTask();
-		 }
+			k-=5;
+			sprintf(menuStr2,"kp = %03d", k);
+			LcdTask();
+		}
 	}
-	lastButton = subButton; 	
 }
 
 void LcdTask (void)
@@ -320,59 +320,4 @@ void LcdTask (void)
 	LCDGotoXY(14,1);
 	LCDPutChar(0x7E);	// display the right arrow
 	*/
-
-
-
 }
-/*
-void menu(void)
-{
-	char x;
-	x=getButton();
-
-
-	while(x!='4')
-	{
-		x=getButton();
-		
-		if(x!='5')
-		{
-        	buttonMenu();
-				
-		}
-		else
-		{
-			sprintf(menuStr1, "Run");
-			sprintf(menuStr2, "Parameters");
-			LcdTask();
-			LCDGotoXY(15,0);
-			LCDPutChar(1);	// display the up arrow
-			LCDGotoXY(14,1);
-			LCDPutChar(0x7F);	// display the left arrow
-			LCDGotoXY(15,1);
-			LCDPutChar(0x7E);	// display the right arrow
-		}
-		
-	}
-		
-}
-
-int main(void)
-{
-	LCDInit(16);
-	AdcInit();
-	while(1){
-		buttonMenu();
-		if(runLine){
-			LCDBackLight(true);
-	
-		}
-		if(runWall){
-			LCDBackLight(false);
-	
-		}
-	}
-		
-}
-
-*/
