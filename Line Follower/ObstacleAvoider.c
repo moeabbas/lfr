@@ -8,6 +8,7 @@
 #include "ADC.h"
 #include "Floor_sensor.h"
 #include "AdvancedMotorControl.h"
+#include <util/delay.h>
 
 bool hasLineBeenFound();
 bool obstacleDetectedInFront();
@@ -49,21 +50,44 @@ void runObstacle()
 	} while (!hasLineBeenFound());
 }
 
-bool hasLineBeenFound()
+bool possibleLineFound()
 {
-	// Currently working on run obstacle only, do not want to exit whiles developing.
-	return false;
-
-	// TODO: make reading line more reliable.
 	uint8_t floorSensor = readFloorSensors();
 
 	switch (floorSensor)
 	{
+		case 0b00001111:
+		case 0b00011110:
+		case 0b00111100:
+		case 0b01111000:
+
+		case 0b01111100:
+		case 0b00111110:
+		case 0b00011111:
+
+		case 0b00111111:
+		case 0b01111110:
+
 		case 0b01111111:
-			return true;
+
+		return true;
 		default:
-			return false;
+		return false;
 	}
+}
+
+bool hasLineBeenFound()
+{
+	for (uint8_t attempt = 0; attempt < 3; attempt++)
+	{		
+		if (possibleLineFound() == false)
+		{
+			return false;
+		}
+		_delay_ms(6);
+	}
+
+	return true;
 }
 
 bool obstacleDetectedInFront()

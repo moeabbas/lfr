@@ -19,6 +19,7 @@
 // Sets pin high on port
 #define setHigh(port, pin) ((port) |= (1 << (pin)))
 
+#define F_CPU 10000000UL
 
 // the following definitions are required in order to use the bool type
 #define true      1
