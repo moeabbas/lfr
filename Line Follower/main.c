@@ -10,7 +10,7 @@
 #include "Wall_sensor.h"
 #include "bluetooth.h"
 #include "buttonMenu.h"
-
+#include "ObstacleAvoider.h"
 #define F_CPU 10000000UL
 #include <util/delay.h>
 
@@ -39,7 +39,7 @@ int main(void) {
 		
 		buttonMenu();
 
-		if(getRunLineFlag())
+		/*if(getRunLineFlag())
 		{
 			runLine();
 			setRunLineFlag(false);
@@ -50,8 +50,18 @@ int main(void) {
 			}
 			
 			setRunWallFlag(true);
-		}
+		}*/
+		setDirectionMotorL(0);
+		setDirectionMotorR(0);
+		setDutyCycleMotorL(250);
+		setDutyCycleMotorR(250);
+		
+
+		//runObstacle();
+	
+	
 	}
+
 	
 	return 0;
 }
