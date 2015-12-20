@@ -491,7 +491,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1f2a
+.text           0x00000000     0x1f38
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega32/avr5/crtatmega32.o
                 0x00000000                __vector_default
@@ -574,290 +574,296 @@ END GROUP
  .text.AdcInit  0x000000b0        0x8 ADC.o
                 0x000000b0                AdcInit
  .text.driveArcOnAxis
-                0x000000b8       0x90 AdvancedMotorControl.o
+                0x000000b8       0x80 AdvancedMotorControl.o
                 0x000000b8                driveArcOnAxis
  .text.driveArc
-                0x00000148       0xb8 AdvancedMotorControl.o
-                0x00000148                driveArc
+                0x00000138       0xa8 AdvancedMotorControl.o
+                0x00000138                driveArc
  .text.USARTInit
-                0x00000200       0x12 bluetooth.o
-                0x00000200                USARTInit
+                0x000001e0       0x12 bluetooth.o
+                0x000001e0                USARTInit
  .text.__vector_13
-                0x00000212       0x1e bluetooth.o
-                0x00000212                __vector_13
+                0x000001f2       0x1e bluetooth.o
+                0x000001f2                __vector_13
  .text.getRunLineFlag
-                0x00000230        0x6 buttonMenu.o
-                0x00000230                getRunLineFlag
+                0x00000210        0x6 buttonMenu.o
+                0x00000210                getRunLineFlag
  .text.setRunLineFlag
-                0x00000236        0x6 buttonMenu.o
-                0x00000236                setRunLineFlag
+                0x00000216        0x6 buttonMenu.o
+                0x00000216                setRunLineFlag
  .text.ADCReadButton
-                0x0000023c       0x42 buttonMenu.o
-                0x0000023c                ADCReadButton
+                0x0000021c       0x42 buttonMenu.o
+                0x0000021c                ADCReadButton
  .text.getButton
-                0x0000027e       0x12 buttonMenu.o
-                0x0000027e                getButton
+                0x0000025e       0x12 buttonMenu.o
+                0x0000025e                getButton
  .text.buttonReleased
-                0x00000290       0x10 buttonMenu.o
-                0x00000290                buttonReleased
- .text.LcdTask  0x000002a0       0x42 buttonMenu.o
-                0x000002a0                LcdTask
+                0x00000270       0x10 buttonMenu.o
+                0x00000270                buttonReleased
+ .text.LcdTask  0x00000280       0x42 buttonMenu.o
+                0x00000280                LcdTask
  .text.subMenuRight
-                0x000002e2       0xdc buttonMenu.o
-                0x000002e2                subMenuRight
+                0x000002c2       0xdc buttonMenu.o
+                0x000002c2                subMenuRight
  .text.subMenuLeft
-                0x000003be       0xdc buttonMenu.o
-                0x000003be                subMenuLeft
+                0x0000039e       0xdc buttonMenu.o
+                0x0000039e                subMenuLeft
  .text.subMenuUp
-                0x0000049a       0xac buttonMenu.o
-                0x0000049a                subMenuUp
+                0x0000047a       0xac buttonMenu.o
+                0x0000047a                subMenuUp
  .text.buttonMenu
-                0x00000546       0xa2 buttonMenu.o
-                0x00000546                buttonMenu
+                0x00000526       0xa2 buttonMenu.o
+                0x00000526                buttonMenu
  .text.initFloorSensor
-                0x000005e8       0x10 Floor_sensor.o
-                0x000005e8                initFloorSensor
+                0x000005c8       0x10 Floor_sensor.o
+                0x000005c8                initFloorSensor
  .text.showFloorInfo
-                0x000005f8      0x106 Floor_sensor.o
-                0x000005f8                showFloorInfo
+                0x000005d8      0x106 Floor_sensor.o
+                0x000005d8                showFloorInfo
  .text.readFloorSensors
-                0x000006fe       0x1a Floor_sensor.o
-                0x000006fe                readFloorSensors
+                0x000006de       0x1a Floor_sensor.o
+                0x000006de                readFloorSensors
  .text.calcFloorErrorAndFlagControl
-                0x00000718      0x118 Floor_sensor.o
-                0x00000718                calcFloorErrorAndFlagControl
+                0x000006f8      0x118 Floor_sensor.o
+                0x000006f8                calcFloorErrorAndFlagControl
  .text.LCD_delay
-                0x00000830        0x8 lcd.o
-                0x00000830                LCD_delay
+                0x00000810        0x8 lcd.o
+                0x00000810                LCD_delay
  .text.LCD_write_nibble
-                0x00000838       0x18 lcd.o
+                0x00000818       0x18 lcd.o
  .text.LCD_write_data
-                0x00000850       0x16 lcd.o
+                0x00000830       0x16 lcd.o
  .text.LCD_long_delay
-                0x00000866        0xa lcd.o
-                0x00000866                LCD_long_delay
+                0x00000846        0xa lcd.o
+                0x00000846                LCD_long_delay
  .text.LCDClear
-                0x00000870       0x2e lcd.o
-                0x00000870                LCDClear
+                0x00000850       0x2e lcd.o
+                0x00000850                LCDClear
  .text.LCDGotoXY
-                0x0000089e       0x30 lcd.o
-                0x0000089e                LCDGotoXY
+                0x0000087e       0x30 lcd.o
+                0x0000087e                LCDGotoXY
  .text.LCDPutChar
-                0x000008ce       0x50 lcd.o
-                0x000008ce                LCDPutChar
+                0x000008ae       0x50 lcd.o
+                0x000008ae                LCDPutChar
  .text.LCDPutString
-                0x0000091e       0x1e lcd.o
-                0x0000091e                LCDPutString
- .text.LCDInit  0x0000093c      0x124 lcd.o
-                0x0000093c                LCDInit
+                0x000008fe       0x1e lcd.o
+                0x000008fe                LCDPutString
+ .text.LCDInit  0x0000091c      0x124 lcd.o
+                0x0000091c                LCDInit
  .text.LEDWrite
-                0x00000a60        0x8 LED_control.o
-                0x00000a60                LEDWrite
+                0x00000a40        0x8 LED_control.o
+                0x00000a40                LEDWrite
  .text.LEDUpdate
-                0x00000a68       0x16 LED_control.o
-                0x00000a68                LEDUpdate
- .text.LEDInit  0x00000a7e       0x24 LED_control.o
-                0x00000a7e                LEDInit
+                0x00000a48       0x16 LED_control.o
+                0x00000a48                LEDUpdate
+ .text.LEDInit  0x00000a5e       0x24 LED_control.o
+                0x00000a5e                LEDInit
  .text.LEDEnable
-                0x00000aa2        0x4 LED_control.o
-                0x00000aa2                LEDEnable
+                0x00000a82        0x4 LED_control.o
+                0x00000a82                LEDEnable
  .text.LEDVoltage
-                0x00000aa6       0xb2 LED_control.o
-                0x00000aa6                LEDVoltage
+                0x00000a86       0xb2 LED_control.o
+                0x00000a86                LEDVoltage
  .text.changeColor
-                0x00000b58      0x104 LED_control.o
-                0x00000b58                changeColor
- .text.calcPWM  0x00000c5c       0xce LED_control.o
-                0x00000c5c                calcPWM
+                0x00000b38      0x104 LED_control.o
+                0x00000b38                changeColor
+ .text.calcPWM  0x00000c3c       0xce LED_control.o
+                0x00000c3c                calcPWM
  .text.__vector_4
-                0x00000d2a       0x7c LED_control.o
-                0x00000d2a                __vector_4
+                0x00000d0a       0x7c LED_control.o
+                0x00000d0a                __vector_4
  .text.setStopFlag
-                0x00000da6        0x6 Logic.o
-                0x00000da6                setStopFlag
+                0x00000d86        0x6 Logic.o
+                0x00000d86                setStopFlag
  .text.setFoundLineFlag
-                0x00000dac        0x6 Logic.o
-                0x00000dac                setFoundLineFlag
+                0x00000d8c        0x6 Logic.o
+                0x00000d8c                setFoundLineFlag
  .text.setLostLineFlag
-                0x00000db2        0x6 Logic.o
-                0x00000db2                setLostLineFlag
+                0x00000d92        0x6 Logic.o
+                0x00000d92                setLostLineFlag
  .text.getFoundLineFlag
-                0x00000db8        0x6 Logic.o
-                0x00000db8                getFoundLineFlag
- .text.go       0x00000dbe       0xda Logic.o
-                0x00000dbe                go
+                0x00000d98        0x6 Logic.o
+                0x00000d98                getFoundLineFlag
+ .text.go       0x00000d9e       0xda Logic.o
+                0x00000d9e                go
  .text.searchMode
-                0x00000e98       0x78 Logic.o
-                0x00000e98                searchMode
- .text.runLine  0x00000f10       0x96 Logic.o
-                0x00000f10                runLine
- .text.test     0x00000fa6       0x86 Logic.o
-                0x00000fa6                test
+                0x00000e78       0x78 Logic.o
+                0x00000e78                searchMode
+ .text.runLine  0x00000ef0       0x96 Logic.o
+                0x00000ef0                runLine
+ .text.test     0x00000f86       0x86 Logic.o
+                0x00000f86                test
  .text.Initialize
-                0x0000102c       0x2a main.o
-                0x0000102c                Initialize
- .text.main     0x00001056       0x3c main.o
-                0x00001056                main
+                0x0000100c       0x2a main.o
+                0x0000100c                Initialize
+ .text.main     0x00001036       0x3c main.o
+                0x00001036                main
  .text.initMotorControl
-                0x00001092       0x5c motor_control.o
-                0x00001092                initMotorControl
+                0x00001072       0x5c motor_control.o
+                0x00001072                initMotorControl
  .text.enableHBridge
-                0x000010ee        0x4 motor_control.o
-                0x000010ee                enableHBridge
+                0x000010ce        0x4 motor_control.o
+                0x000010ce                enableHBridge
  .text.getSensorUpdateFlag
-                0x000010f2        0x6 motor_control.o
-                0x000010f2                getSensorUpdateFlag
+                0x000010d2        0x6 motor_control.o
+                0x000010d2                getSensorUpdateFlag
  .text.clearSensorUpdateFlag
-                0x000010f8        0x6 motor_control.o
-                0x000010f8                clearSensorUpdateFlag
+                0x000010d8        0x6 motor_control.o
+                0x000010d8                clearSensorUpdateFlag
  .text.limitDutyCycle
-                0x000010fe       0x14 motor_control.o
-                0x000010fe                limitDutyCycle
+                0x000010de       0x14 motor_control.o
+                0x000010de                limitDutyCycle
  .text.setDutyCycleMotorL
-                0x00001112        0xc motor_control.o
-                0x00001112                setDutyCycleMotorL
+                0x000010f2        0xc motor_control.o
+                0x000010f2                setDutyCycleMotorL
  .text.setDutyCycleMotorR
-                0x0000111e        0xc motor_control.o
-                0x0000111e                setDutyCycleMotorR
+                0x000010fe        0xc motor_control.o
+                0x000010fe                setDutyCycleMotorR
  .text.setDirectionMotorL
-                0x0000112a       0x18 motor_control.o
-                0x0000112a                setDirectionMotorL
+                0x0000110a       0x18 motor_control.o
+                0x0000110a                setDirectionMotorL
  .text.setDirectionMotorR
-                0x00001142       0x18 motor_control.o
-                0x00001142                setDirectionMotorR
+                0x00001122       0x18 motor_control.o
+                0x00001122                setDirectionMotorR
  .text.getSensorMotorL
-                0x0000115a        0x6 motor_control.o
-                0x0000115a                getSensorMotorL
+                0x0000113a        0x6 motor_control.o
+                0x0000113a                getSensorMotorL
  .text.getSensorMotorR
-                0x00001160        0x6 motor_control.o
-                0x00001160                getSensorMotorR
+                0x00001140        0x6 motor_control.o
+                0x00001140                getSensorMotorR
  .text.showMotorInfo
-                0x00001166       0x74 motor_control.o
-                0x00001166                showMotorInfo
+                0x00001146       0x74 motor_control.o
+                0x00001146                showMotorInfo
  .text.calcDuty
-                0x000011da      0x2cc motor_control.o
-                0x000011da                calcDuty
+                0x000011ba      0x2cc motor_control.o
+                0x000011ba                calcDuty
  .text.__vector_1
-                0x000014a6       0x22 motor_control.o
-                0x000014a6                __vector_1
+                0x00001486       0x22 motor_control.o
+                0x00001486                __vector_1
  .text.__vector_2
-                0x000014c8       0x22 motor_control.o
-                0x000014c8                __vector_2
+                0x000014a8       0x22 motor_control.o
+                0x000014a8                __vector_2
  .text.__vector_10
-                0x000014ea       0x36 motor_control.o
-                0x000014ea                __vector_10
+                0x000014ca       0x36 motor_control.o
+                0x000014ca                __vector_10
  .text.obstacleDetectedInFront
-                0x00001520       0x14 ObstacleAvoider.o
-                0x00001520                obstacleDetectedInFront
+                0x00001500       0x14 ObstacleAvoider.o
+                0x00001500                obstacleDetectedInFront
  .text.isTooFarFromObstacle
-                0x00001534       0x14 ObstacleAvoider.o
-                0x00001534                isTooFarFromObstacle
+                0x00001514       0x14 ObstacleAvoider.o
+                0x00001514                isTooFarFromObstacle
  .text.isTooNearToObstacle
-                0x00001548       0x14 ObstacleAvoider.o
-                0x00001548                isTooNearToObstacle
+                0x00001528       0x14 ObstacleAvoider.o
+                0x00001528                isTooNearToObstacle
  .text.arcTowardsObstacle
-                0x0000155c        0xe ObstacleAvoider.o
-                0x0000155c                arcTowardsObstacle
+                0x0000153c        0xe ObstacleAvoider.o
+                0x0000153c                arcTowardsObstacle
+ .text.arcSharplyAwayFromObstacle
+                0x0000154a        0xc ObstacleAvoider.o
+                0x0000154a                arcSharplyAwayFromObstacle
  .text.arcAwayFromObstacle
-                0x0000156a        0xe ObstacleAvoider.o
-                0x0000156a                arcAwayFromObstacle
+                0x00001556        0xe ObstacleAvoider.o
+                0x00001556                arcAwayFromObstacle
  .text.moveForward
-                0x00001578        0xe ObstacleAvoider.o
-                0x00001578                moveForward
+                0x00001564        0xe ObstacleAvoider.o
+                0x00001564                moveForward
  .text.hasAlignedWithObstacle
-                0x00001586       0x14 ObstacleAvoider.o
-                0x00001586                hasAlignedWithObstacle
+                0x00001572       0x14 ObstacleAvoider.o
+                0x00001572                hasAlignedWithObstacle
  .text.alignWithObstacle
+                0x00001586       0x14 ObstacleAvoider.o
+                0x00001586                alignWithObstacle
+ .text.isExtremelyNearToObstacle
                 0x0000159a       0x14 ObstacleAvoider.o
-                0x0000159a                alignWithObstacle
+                0x0000159a                isExtremelyNearToObstacle
  .text.runObstacle
-                0x000015ae       0x30 ObstacleAvoider.o
+                0x000015ae       0x3e ObstacleAvoider.o
                 0x000015ae                runObstacle
  .text.avr-libc.fplib
-                0x000015de        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
-                0x000015de                __subsf3
-                0x000015e0                __addsf3
+                0x000015ec        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
+                0x000015ec                __subsf3
+                0x000015ee                __addsf3
  .text.avr-libc.fplib
-                0x000015ec       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(addsf3x.o)
-                0x0000160e                __addsf3x
+                0x000015fa       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(addsf3x.o)
+                0x0000161c                __addsf3x
  .text.avr-libc.fplib
-                0x000016b8        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fixsfsi.o)
-                0x000016b8                __fixsfsi
+                0x000016c6        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fixsfsi.o)
+                0x000016c6                __fixsfsi
  .text.avr-libc.fplib
-                0x000016c6       0x5e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
-                0x000016c6                __fixunssfsi
+                0x000016d4       0x5e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
+                0x000016d4                __fixunssfsi
  .text.avr-libc.fplib
-                0x00001724       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(floatsisf.o)
-                0x00001724                __floatunsisf
-                0x00001728                __floatsisf
+                0x00001732       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(floatsisf.o)
+                0x00001732                __floatunsisf
+                0x00001736                __floatsisf
  .text.avr-libc.fplib
-                0x0000179e        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_inf.o)
-                0x0000179e                __fp_inf
+                0x000017ac        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_inf.o)
+                0x000017ac                __fp_inf
  .text.avr-libc.fplib
-                0x000017aa        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_nan.o)
-                0x000017aa                __fp_nan
+                0x000017b8        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_nan.o)
+                0x000017b8                __fp_nan
  .text.avr-libc.fplib
-                0x000017b0        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
-                0x000017b0                __fp_pscA
+                0x000017be        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
+                0x000017be                __fp_pscA
  .text.avr-libc.fplib
-                0x000017be        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
-                0x000017be                __fp_pscB
+                0x000017cc        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
+                0x000017cc                __fp_pscB
  .text.avr-libc.fplib
-                0x000017cc       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_round.o)
-                0x000017cc                __fp_round
+                0x000017da       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_round.o)
+                0x000017da                __fp_round
  .text.avr-libc.fplib
-                0x000017ee       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_split3.o)
-                0x000017ee                __fp_split3
-                0x000017fe                __fp_splitA
+                0x000017fc       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_split3.o)
+                0x000017fc                __fp_split3
+                0x0000180c                __fp_splitA
  .text.avr-libc.fplib
-                0x00001832        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_zero.o)
-                0x00001832                __fp_zero
-                0x00001834                __fp_szero
+                0x00001840        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(fp_zero.o)
+                0x00001840                __fp_zero
+                0x00001842                __fp_szero
  .text.avr-libc.fplib
-                0x00001840        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(mulsf3.o)
-                0x00001840                __mulsf3
+                0x0000184e        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(mulsf3.o)
+                0x0000184e                __mulsf3
  .text.avr-libc.fplib
-                0x00001848       0xd2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
-                0x00001866                __mulsf3x
-                0x0000186c                __mulsf3_pse
+                0x00001856       0xd2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
+                0x00001874                __mulsf3x
+                0x0000187a                __mulsf3_pse
  .text.libgcc.div
-                0x0000191a       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_divmodhi4.o)
-                0x0000191a                _div
-                0x0000191a                __divmodhi4
- .text.libgcc   0x00001942        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_tablejump2.o)
-                0x00001942                __tablejump2__
+                0x00001928       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_divmodhi4.o)
+                0x00001928                _div
+                0x00001928                __divmodhi4
+ .text.libgcc   0x00001950        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_tablejump2.o)
+                0x00001950                __tablejump2__
  .text.libgcc.div
-                0x0000194e       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_udivmodhi4.o)
-                0x0000194e                __udivmodhi4
+                0x0000195c       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_udivmodhi4.o)
+                0x0000195c                __udivmodhi4
  .text.avr-libc
-                0x00001976       0x46 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                0x00001976                sprintf
+                0x00001984       0x46 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(sprintf.o)
+                0x00001984                sprintf
  .text.avr-libc
-                0x000019bc      0x3a4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x000019bc                vfprintf
+                0x000019ca      0x3a4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x000019ca                vfprintf
  .text.avr-libc
-                0x00001d60       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x00001d60                strnlen_P
+                0x00001d6e       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x00001d6e                strnlen_P
  .text.avr-libc
-                0x00001d76       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00001d76                strnlen
+                0x00001d84       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x00001d84                strnlen
  .text.avr-libc
-                0x00001d8c       0x70 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x00001d8c                fputc
+                0x00001d9a       0x70 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x00001d9a                fputc
  .text.avr-libc
-                0x00001dfc       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x00001dfc                __ultoa_invert
+                0x00001e0a       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x00001e0a                __ultoa_invert
  .text.libgcc.prologue
-                0x00001eb8       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_prologue.o)
-                0x00001eb8                __prologue_saves__
+                0x00001ec6       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_prologue.o)
+                0x00001ec6                __prologue_saves__
  .text.libgcc.prologue
-                0x00001ef0       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_epilogue.o)
-                0x00001ef0                __epilogue_restores__
-                0x00001f26                . = ALIGN (0x2)
+                0x00001efe       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_epilogue.o)
+                0x00001efe                __epilogue_restores__
+                0x00001f34                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001f26        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
-                0x00001f26                _exit
-                0x00001f26                exit
+ .fini9         0x00001f34        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
+                0x00001f34                _exit
+                0x00001f34                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -876,11 +882,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001f26        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
+ .fini0         0x00001f34        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001f2a                _etext = .
+                0x00001f38                _etext = .
 
-.data           0x00800060       0x94 load address 0x00001f2a
+.data           0x00800060       0x94 load address 0x00001f38
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -995,8 +1001,8 @@ END GROUP
                 0x00800124                menuStr2
                 0x00800132                menuStr1
                 0x00800140                PROVIDE (__bss_end, .)
-                0x00001f2a                __data_load_start = LOADADDR (.data)
-                0x00001fbe                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001f38                __data_load_start = LOADADDR (.data)
+                0x00001fcc                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800140        0x0
                 0x00800140                PROVIDE (__noinit_start, .)
@@ -1081,7 +1087,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x418
+.debug_aranges  0x00000000      0x428
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x28 ADC.o
@@ -1104,54 +1110,54 @@ END GROUP
  .debug_aranges
                 0x000002f8       0xb8 motor_control.o
  .debug_aranges
-                0x000003b0       0x68 ObstacleAvoider.o
+                0x000003b0       0x78 ObstacleAvoider.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x343a
+.debug_info     0x00000000     0x3464
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000       0xec ADC.o
- .debug_info    0x000000ec      0x4c3 AdvancedMotorControl.o
- .debug_info    0x000005af      0x51d bluetooth.o
- .debug_info    0x00000acc      0x7ff buttonMenu.o
- .debug_info    0x000012cb      0x2d9 Floor_sensor.o
- .debug_info    0x000015a4      0x5e5 lcd.o
- .debug_info    0x00001b89      0x613 LED_control.o
- .debug_info    0x0000219c      0x732 Logic.o
- .debug_info    0x000028ce      0x2b8 main.o
- .debug_info    0x00002b86      0x56f motor_control.o
- .debug_info    0x000030f5      0x345 ObstacleAvoider.o
+ .debug_info    0x000000ec      0x46b AdvancedMotorControl.o
+ .debug_info    0x00000557      0x51d bluetooth.o
+ .debug_info    0x00000a74      0x7ff buttonMenu.o
+ .debug_info    0x00001273      0x2d9 Floor_sensor.o
+ .debug_info    0x0000154c      0x5e5 lcd.o
+ .debug_info    0x00001b31      0x613 LED_control.o
+ .debug_info    0x00002144      0x732 Logic.o
+ .debug_info    0x00002876      0x2b8 main.o
+ .debug_info    0x00002b2e      0x56f motor_control.o
+ .debug_info    0x0000309d      0x3c7 ObstacleAvoider.o
 
-.debug_abbrev   0x00000000     0x123a
+.debug_abbrev   0x00000000     0x122f
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x9f ADC.o
- .debug_abbrev  0x0000009f      0x17b AdvancedMotorControl.o
- .debug_abbrev  0x0000021a      0x172 bluetooth.o
- .debug_abbrev  0x0000038c      0x252 buttonMenu.o
- .debug_abbrev  0x000005de      0x168 Floor_sensor.o
- .debug_abbrev  0x00000746      0x1cd lcd.o
- .debug_abbrev  0x00000913      0x1d3 LED_control.o
- .debug_abbrev  0x00000ae6      0x262 Logic.o
- .debug_abbrev  0x00000d48      0x18a main.o
- .debug_abbrev  0x00000ed2      0x246 motor_control.o
- .debug_abbrev  0x00001118      0x122 ObstacleAvoider.o
+ .debug_abbrev  0x0000009f      0x170 AdvancedMotorControl.o
+ .debug_abbrev  0x0000020f      0x172 bluetooth.o
+ .debug_abbrev  0x00000381      0x252 buttonMenu.o
+ .debug_abbrev  0x000005d3      0x168 Floor_sensor.o
+ .debug_abbrev  0x0000073b      0x1cd lcd.o
+ .debug_abbrev  0x00000908      0x1d3 LED_control.o
+ .debug_abbrev  0x00000adb      0x262 Logic.o
+ .debug_abbrev  0x00000d3d      0x18a main.o
+ .debug_abbrev  0x00000ec7      0x246 motor_control.o
+ .debug_abbrev  0x0000110d      0x122 ObstacleAvoider.o
 
-.debug_line     0x00000000     0x122a
+.debug_line     0x00000000     0x124c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000       0xb3 ADC.o
- .debug_line    0x000000b3      0x134 AdvancedMotorControl.o
- .debug_line    0x000001e7      0x149 bluetooth.o
- .debug_line    0x00000330      0x25e buttonMenu.o
- .debug_line    0x0000058e      0x146 Floor_sensor.o
- .debug_line    0x000006d4      0x186 lcd.o
- .debug_line    0x0000085a      0x272 LED_control.o
- .debug_line    0x00000acc      0x1d8 Logic.o
- .debug_line    0x00000ca4      0x1b7 main.o
- .debug_line    0x00000e5b      0x254 motor_control.o
- .debug_line    0x000010af      0x17b ObstacleAvoider.o
+ .debug_line    0x000000b3      0x130 AdvancedMotorControl.o
+ .debug_line    0x000001e3      0x149 bluetooth.o
+ .debug_line    0x0000032c      0x25e buttonMenu.o
+ .debug_line    0x0000058a      0x146 Floor_sensor.o
+ .debug_line    0x000006d0      0x186 lcd.o
+ .debug_line    0x00000856      0x272 LED_control.o
+ .debug_line    0x00000ac8      0x1d8 Logic.o
+ .debug_line    0x00000ca0      0x1b7 main.o
+ .debug_line    0x00000e57      0x254 motor_control.o
+ .debug_line    0x000010ab      0x1a1 ObstacleAvoider.o
 
-.debug_frame    0x00000000      0xa1c
+.debug_frame    0x00000000      0xa3c
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 ADC.o
  .debug_frame   0x00000034       0x88 AdvancedMotorControl.o
@@ -1163,9 +1169,9 @@ END GROUP
  .debug_frame   0x0000064c       0xfc Logic.o
  .debug_frame   0x00000748       0x34 main.o
  .debug_frame   0x0000077c      0x1ec motor_control.o
- .debug_frame   0x00000968       0xb4 ObstacleAvoider.o
+ .debug_frame   0x00000968       0xd4 ObstacleAvoider.o
 
-.debug_str      0x00000000      0xb1a
+.debug_str      0x00000000      0xb4f
  *(.debug_str)
  .debug_str     0x00000000      0x15e ADC.o
                                 0x197 (size before relaxing)
@@ -1187,10 +1193,10 @@ END GROUP
                                 0x268 (size before relaxing)
  .debug_str     0x0000094b       0xfe motor_control.o
                                 0x363 (size before relaxing)
- .debug_str     0x00000a49       0xd1 ObstacleAvoider.o
-                                0x26a (size before relaxing)
+ .debug_str     0x00000a49      0x106 ObstacleAvoider.o
+                                0x29f (size before relaxing)
 
-.debug_loc      0x00000000     0x1c0c
+.debug_loc      0x00000000     0x1c24
  *(.debug_loc)
  .debug_loc     0x00000000       0x21 ADC.o
  .debug_loc     0x00000021      0x439 AdvancedMotorControl.o
@@ -1202,7 +1208,7 @@ END GROUP
  .debug_loc     0x0000145d      0x3a3 Logic.o
  .debug_loc     0x00001800       0x47 main.o
  .debug_loc     0x00001847      0x365 motor_control.o
- .debug_loc     0x00001bac       0x60 ObstacleAvoider.o
+ .debug_loc     0x00001bac       0x78 ObstacleAvoider.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1222,7 +1228,7 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x380
+.debug_ranges   0x00000000      0x390
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x18 ADC.o
  .debug_ranges  0x00000018       0x28 AdvancedMotorControl.o
@@ -1234,7 +1240,7 @@ END GROUP
  .debug_ranges  0x00000218       0x50 Logic.o
  .debug_ranges  0x00000268       0x18 main.o
  .debug_ranges  0x00000280       0xa8 motor_control.o
- .debug_ranges  0x00000328       0x58 ObstacleAvoider.o
+ .debug_ranges  0x00000328       0x68 ObstacleAvoider.o
 
 .debug_macro
  *(.debug_macro)

@@ -18,6 +18,8 @@ void arcTowardsObstacle();
 void arcAwayFromObstacle();
 void moveForward();
 bool hasAlignedWithObstacle();
+bool isExtremelyNearToObstacle();
+void arcSharplyAwayFromObstacle();
 
 void runObstacle()
 {
@@ -31,11 +33,15 @@ void runObstacle()
 		{
 			arcTowardsObstacle();
 		}
+		else if(isExtremelyNearToObstacle())
+		{
+			arcSharplyAwayFromObstacle();
+		}
 		else if(isTooNearToObstacle())
 		{
 			arcAwayFromObstacle();
 		}
-		else
+		else 
 		{
 			moveForward();
 		}
@@ -45,21 +51,14 @@ void runObstacle()
 
 bool hasLineBeenFound()
 {
+	// Currently working on run obstacle only, do not want to exit whiles developing.
 	return false;
 
+	// TODO: make reading line more reliable.
 	uint8_t floorSensor = readFloorSensors();
 
 	switch (floorSensor)
 	{
-		case 0b01111000:
-		case 0b00111100:
-		case 0b00011110:
-		case 0b00001111:
-		case 0b01111100:
-		case 0b00111110:
-		case 0b00011111:
-		case 0b01111110:
-		case 0b00111111:
 		case 0b01111111:
 			return true;
 		default:
@@ -83,7 +82,7 @@ void alignWithObstacle()
 {
 	do 
 	{
-		driveArcOnAxis(50,DIRECTION_ARC_RIGHT, 50);
+		driveArcOnAxis(50,DIRECTION_ARC_RIGHT, 65);
 	} while (hasAlignedWithObstacle() ==  false);
 }
 
@@ -91,7 +90,7 @@ bool isTooFarFromObstacle()
 {
 	uint16_t distance = AdcConvert(2);
 
-	if (distance < (uint16_t)400)
+	if (distance < (uint16_t)350)
 	{	
 		return true;
 	}
@@ -103,7 +102,7 @@ bool isTooNearToObstacle()
 {
 	uint16_t distance = AdcConvert(2);
 
-	if (distance > (uint16_t)450)
+	if (distance > (uint16_t)400)
 	{
 		return true;
 	}
@@ -116,9 +115,14 @@ void arcTowardsObstacle()
 	driveArc(5, DIRECTION_ARC_LEFT, 70, 80);
 }
 
+void arcSharplyAwayFromObstacle()
+{
+	driveArcOnAxis(5,DIRECTION_ARC_RIGHT,70);
+}
+
 void arcAwayFromObstacle()
 {
-	driveArc(5, DIRECTION_ARC_RIGHT, 70, 80);
+	driveArc(5, DIRECTION_ARC_RIGHT, 70, 90);
 }
 
 void moveForward()
@@ -130,7 +134,19 @@ bool hasAlignedWithObstacle()
 {
 	uint16_t distance = AdcConvert(2);
 
-	if (distance > 350)
+	if (distance > 250)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool isExtremelyNearToObstacle()
+{
+	uint16_t distance = AdcConvert(2);
+
+	if (distance > (uint16_t)500)
 	{
 		return true;
 	}

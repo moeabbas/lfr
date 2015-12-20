@@ -20,7 +20,7 @@ void driveArcOnAxis(uint8_t distance, uint8_t direction, uint8_t speed)
 	uint8_t targetTravelled = distance;
 
 	uint8_t outsideWheelSpeed = speed;
-	uint8_t insideWheelSpeed = 45;
+	uint8_t insideWheelSpeed = 60;
 
 	if (direction == DIRECTION_ARC_LEFT)
 	{
@@ -59,9 +59,6 @@ void driveArcOnAxis(uint8_t distance, uint8_t direction, uint8_t speed)
 
 		clearSensorUpdateFlag();
 	}
-
-	setDutyCycleMotorL(0);
-	setDutyCycleMotorR(0);
 }
 
 /*
@@ -129,9 +126,6 @@ void driveArc(uint8_t distance, uint8_t direction, uint8_t speed, uint8_t degree
 
 		clearSensorUpdateFlag();
 	}
-
-	setDutyCycleMotorL(0);
-	setDutyCycleMotorR(0);
 }
 
 uint8_t calculateTurnWheelSpeed(uint8_t speed, uint8_t degree)
