@@ -32,18 +32,8 @@
 #define FLAG_SET     1
 #define FLAG_USED    2
 
-#define DIRECTION_STRAIGHT 0
-#define DIRECTION_LEFT     1
-#define DIRECTION_RIGHT    2
 
-// speed MAX ~17-18.
-#define SPEED_HIGH   16
-#define SPEED_NORMAL 12
-#define SPEED_LOW    6
-#define SPEED_CREEP  2
 
-#define MOTOR_FORWARD 0
-#define MOTOR_REVERSE 1
 
 uint8_t stopFlag = FLAG_NOT_SET;
 uint8_t foundLineFlag = FLAG_NOT_SET;
@@ -145,7 +135,7 @@ void runLine(){
 				go(150,DIRECTION_RIGHT,SPEED_LOW);
 				setDirectionMotorL(forwardDirection);
 				setDirectionMotorR(forwardDirection);
-				currentSpeed = SPEED_NORMAL;
+				currentSpeed = SPEED_LOW;
 				foundLineFlag = FLAG_USED;
 			}
 		

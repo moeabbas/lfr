@@ -4,6 +4,8 @@
 
 ADC.c
 
+AdvancedMotorControl.c
+
 bluetooth.c
 
 buttonMenu.c
@@ -19,6 +21,8 @@ Logic.c
 main.c
 
 motor_control.c
+
+ObstacleAvoider.c
 
 Wall_sensor.c
 

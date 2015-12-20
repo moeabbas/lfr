@@ -130,6 +130,12 @@
     <Compile Include="ADC.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="AdvancedMotorControl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="AdvancedMotorControl.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="bluetooth.c">
       <SubType>compile</SubType>
     </Compile>
@@ -176,6 +182,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Motor_Control.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ObstacleAvoider.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ObstacleAvoider.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="serialio.h">

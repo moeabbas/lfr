@@ -10,6 +10,8 @@
 #include "Wall_sensor.h"
 #include "bluetooth.h"
 #include "buttonMenu.h"
+#include "ObstacleAvoider.h"
+#include "AdvancedMotorControl.h"
 
 #define F_CPU 10000000UL
 #include <util/delay.h>
@@ -30,14 +32,16 @@ int main(void) {
 
 	Initialize();
 
+
 	while(1)
 	{
 		// Update voltage LED's
 		LEDVoltage();
 		
 		//test();
-		
 		buttonMenu();
+	
+		runObstacle();
 
 		if(getRunLineFlag())
 		{
@@ -49,7 +53,7 @@ int main(void) {
 				_delay_ms(3);
 			}
 			
-			setRunWallFlag(true);
+			//setRunWallFlag(true);
 		}
 	}
 	
