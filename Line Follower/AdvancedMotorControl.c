@@ -8,74 +8,147 @@
 #include "Motor_Control.h"
 #include "defines.h"
 
-uint8_t calculateExpectedTurnWheelDistance(uint8_t distance, uint8_t degree);
-bool haveMotorsTravelledRequiredDistance(uint8_t currentLeft, uint8_t currentRight, uint8_t targetLeft, uint8_t targetRight);
+uint8_t calculateTurnWheelSpeed(uint8_t distance, uint8_t degree);
+bool hasMotorTravelledRequiredDistance(uint8_t currentLeft, uint8_t targetLeft);
 
-// distance:100, direction: right, speed ?, degree: 10
-void driveArc(uint8_t distance, uint8_t direction, uint8_t speed, uint8_t degree)
+void driveArcOnAxis(uint8_t distance, uint8_t direction, uint8_t speed)
 {
 	// initial state
-	int currentTravelledLeft = 0;
-	int currentTravelledRight = 0;
-	
+	uint8_t currentTravelled = 0;
+
 	// target state
-	uint8_t targetTravelledLeft;
-	uint8_t targetTravelledRight;
+	uint8_t targetTravelled = distance;
+
+	uint8_t outsideWheelSpeed = speed;
+	uint8_t insideWheelSpeed = 45;
 
 	if (direction == DIRECTION_ARC_LEFT)
-	{	
-		targetTravelledLeft = calculateExpectedTurnWheelDistance(distance, degree);
-		targetTravelledRight = distance;
+	{
+		setDirectionMotorL(MOTOR_REVERSE);
+		setDirectionMotorR(MOTOR_FORWARD);
+		setDutyCycleMotorL(insideWheelSpeed);
+		setDutyCycleMotorR(outsideWheelSpeed);
+	}
+	else if (direction == DIRECTION_ARC_RIGHT)
+	{
+		setDirectionMotorL(MOTOR_FORWARD);
+		setDirectionMotorR(MOTOR_REVERSE);
+		setDutyCycleMotorL(outsideWheelSpeed);
+		setDutyCycleMotorR(insideWheelSpeed);
 	}
 
-	else if (direction == DIRECTION_ARC_RIGHT)
-	{	
-		targetTravelledLeft = distance;
-		targetTravelledRight = calculateExpectedTurnWheelDistance(distance, degree);
+	while (hasMotorTravelledRequiredDistance(currentTravelled, targetTravelled) == false)
+	{
+		if (!getSensorUpdateFlag())
+		{
+			continue;
+		}
+		
+		if (direction == DIRECTION_ARC_LEFT)
+		{
+			currentTravelled += getSensorMotorR();
+		}
+		else if (direction == DIRECTION_ARC_RIGHT)
+		{
+			currentTravelled += getSensorMotorL();
+		}
+		else
+		{
+			return;
+		}
+
+		clearSensorUpdateFlag();
 	}
-	else 
+
+	setDutyCycleMotorL(0);
+	setDutyCycleMotorR(0);
+}
+
+/*
+ * distance:	units of distance to travel (0 -> unlimited)
+ * direction:	direction to arc in (DIRECTION_ARC_LEFT / DIRECTION_ARC_RIGHT)
+ * speed:		speed of movement (0 -> 250)
+ * degree:		sharpness of arc (0 [straight line] -> 90 [sharpest turn])
+ */
+
+void driveArc(uint8_t distance, uint8_t direction, uint8_t speed, uint8_t degree)
+{
+	if (degree > 90 || degree < 0)
 	{
 		return;
 	}
 
+	// initial state
+	uint8_t currentTravelled = 0;
+	
+	// target state
+	uint8_t targetTravelled = distance;
+
+	uint8_t outsideWheelSpeed = speed;
+	uint8_t insideWheelSpeed = calculateTurnWheelSpeed(speed, degree);
+
 	setDirectionMotorL(MOTOR_FORWARD);
 	setDirectionMotorR(MOTOR_FORWARD);
 
-	while (haveMotorsTravelledRequiredDistance(currentTravelledLeft, currentTravelledRight, targetTravelledLeft, targetTravelledRight) == false)
+	if (direction == DIRECTION_ARC_LEFT)
 	{	
-		currentTravelledLeft  += getSensorMotorL();
-		currentTravelledRight += getSensorMotorR();
-	
-		uint8_t turnWheelError;
+		setDutyCycleMotorL(insideWheelSpeed);
+		setDutyCycleMotorR(outsideWheelSpeed);
+	}
 
+	else if (direction == DIRECTION_ARC_RIGHT)
+	{	
+		setDutyCycleMotorL(outsideWheelSpeed);
+		setDutyCycleMotorR(insideWheelSpeed);
+	}
+	else 
+	{
+		// Invalid directional input.
+		return;
+	}
+
+	while (hasMotorTravelledRequiredDistance(currentTravelled, targetTravelled) == false)
+	{
+		if (!getSensorUpdateFlag())
+		{
+			continue;
+		}
+		
 		if (direction == DIRECTION_ARC_LEFT)
 		{
-			uint8_t expectedTurnWheelDistance = calculateExpectedTurnWheelDistance(currentTravelledRight, degree);
-			turnWheelError = expectedTurnWheelDistance - currentTravelledLeft;
+			currentTravelled += getSensorMotorR();
 		}
 		else if (direction == DIRECTION_ARC_RIGHT)
 		{
-			uint8_t expectedTurnWheelDistance = calculateExpectedTurnWheelDistance(currentTravelledLeft, degree);
-			turnWheelError = expectedTurnWheelDistance - currentTravelledRight;
+			currentTravelled += getSensorMotorL();
 		}
 		else
 		{
-			return; // Should never come here...
+			return;
 		}
 
-		
+		clearSensorUpdateFlag();
 	}
+
+	setDutyCycleMotorL(0);
+	setDutyCycleMotorR(0);
 }
 
-uint8_t calculateExpectedTurnWheelDistance(uint8_t distance, uint8_t degree)
+uint8_t calculateTurnWheelSpeed(uint8_t speed, uint8_t degree)
 {
-	uint8_t result = (distance*(90-degree)/90);
+	uint8_t result = speed*(90-degree)/90;
+
+	if (result < 0)
+	{
+		result = 0;
+	}
+
 	return result;
 }
 
-bool haveMotorsTravelledRequiredDistance(uint8_t currentLeft, uint8_t currentRight, uint8_t targetLeft, uint8_t targetRight)
+bool hasMotorTravelledRequiredDistance(uint8_t currentDistance, uint8_t targetDistance)
 {
-	if (currentLeft>=targetLeft && currentRight>=targetRight)
+	if (currentDistance >= targetDistance)
 	{
 		return true;
 	}

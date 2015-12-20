@@ -8,6 +8,7 @@
 #include <avr/interrupt.h>
 #include <stdlib.h>
 #include "defines.h"
+#include "Logic.h"
 
 char  menuStr1[14];
 char  menuStr2[14];
@@ -280,26 +281,9 @@ void subMenuUp(void)
 }
 void subMenuDown(void)
 {
-	char subButton = getButton();
-	sprintf(menuStr1, "En_Bluetooth");
-	LcdTask();
-	while(subButton != centralButton)
+	while(1)
 	{
-		subButton=getButton();
-		if(subButton == upButton)
-		{
-			while(!buttonReleased());
-			k+=5;
-			sprintf(menuStr2,"kp = %03d", k);
-			LcdTask();
-		}
-		else if(subButton == downButton)
-		{
-			while(!buttonReleased());
-			k-=5;
-			sprintf(menuStr2,"kp = %03d", k);
-			LcdTask();
-		}
+		test();
 	}
 }
 

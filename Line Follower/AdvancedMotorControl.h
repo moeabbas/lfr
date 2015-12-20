@@ -14,6 +14,7 @@
 #define DIRECTION_ARC_LEFT  0
 #define DIRECTION_ARC_RIGHT 1
 
+void driveArcOnAxis(uint8_t distance, uint8_t direction, uint8_t speed);
 void driveArc(uint8_t distance, uint8_t direction, uint8_t speed, uint8_t degree);
 
 #endif /* ADVANCEDMOTORCONTROL_H_ */

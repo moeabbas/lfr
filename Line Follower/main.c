@@ -11,6 +11,8 @@
 #include "bluetooth.h"
 #include "buttonMenu.h"
 #include "ObstacleAvoider.h"
+#include "AdvancedMotorControl.h"
+
 #define F_CPU 10000000UL
 #include <util/delay.h>
 
@@ -30,16 +32,18 @@ int main(void) {
 
 	Initialize();
 
+
 	while(1)
 	{
 		// Update voltage LED's
 		LEDVoltage();
 		
 		//test();
-		
 		buttonMenu();
+	
+		runObstacle();
 
-		/*if(getRunLineFlag())
+		if(getRunLineFlag())
 		{
 			runLine();
 			setRunLineFlag(false);
@@ -49,19 +53,9 @@ int main(void) {
 				_delay_ms(3);
 			}
 			
-			setRunWallFlag(true);
-		}*/
-		setDirectionMotorL(0);
-		setDirectionMotorR(0);
-		setDutyCycleMotorL(250);
-		setDutyCycleMotorR(250);
-		
-
-		//runObstacle();
-	
-	
+			//setRunWallFlag(true);
+		}
 	}
-
 	
 	return 0;
 }
