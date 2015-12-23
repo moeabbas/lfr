@@ -13,7 +13,7 @@
 #include "ObstacleAvoider.h"
 #include "AdvancedMotorControl.h"
 
-#define F_CPU 10000000UL
+
 #include <util/delay.h>
 
 /*
@@ -31,30 +31,28 @@ void Initialize();
 int main(void) {
 
 	Initialize();
-
+	//LEDVoltage();
+	buttonMenu();
 
 	while(1)
 	{
 		// Update voltage LED's
 		LEDVoltage();
-		
-		//test();
-		buttonMenu();
 	
-		runObstacle();
-
 		if(getRunLineFlag())
 		{
 			runLine();
-			setRunLineFlag(false);
+
+			setRunLineFlag(true);
+			setStopFlag(FLAG_NOT_SET);
 
 			for( int i = 0; i < 1000; i++)
 			{
 				_delay_ms(3);
 			}
-			
-			//setRunWallFlag(true);
 		}
+
+		runObstacle();
 	}
 	
 	return 0;

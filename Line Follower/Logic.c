@@ -23,14 +23,6 @@
 //                       Local variables                               //
 /////////////////////////////////////////////////////////////////////////
 
-// Flags for driving the IHK Line.
-// 0 = flag not set
-// 1 = flag set.
-// 2 = flag used
-
-#define FLAG_NOT_SET 0
-#define FLAG_SET     1
-#define FLAG_USED    2
 
 
 
@@ -111,7 +103,7 @@ void runLine(){
 	static const uint8_t forwardDirection = 0;
 	
 	// Start speed, current speed.
-	uint8_t currentSpeed = SPEED_LOW;
+	uint8_t currentSpeed = SPEED_CREEP;
 
 	setDirectionMotorL(forwardDirection);
 	setDirectionMotorR(forwardDirection);
@@ -132,10 +124,10 @@ void runLine(){
 			// Increase speed and follow the line.
 			if(foundLineFlag == FLAG_SET)
 			{
-				go(150,DIRECTION_RIGHT,SPEED_LOW);
+				go(150,DIRECTION_RIGHT,SPEED_CREEP);
 				setDirectionMotorL(forwardDirection);
 				setDirectionMotorR(forwardDirection);
-				currentSpeed = SPEED_LOW;
+				currentSpeed = SPEED_CREEP;
 				foundLineFlag = FLAG_USED;
 			}
 		

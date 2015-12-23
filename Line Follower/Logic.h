@@ -38,3 +38,12 @@ void test();
 #define SPEED_NORMAL 12
 #define SPEED_LOW    6
 #define SPEED_CREEP  2
+
+// Flags for driving the IHK Line.
+// 0 = flag not set
+// 1 = flag set.
+// 2 = flag used
+
+#define FLAG_NOT_SET 0
+#define FLAG_SET     1
+#define FLAG_USED    2
