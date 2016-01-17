@@ -78,13 +78,13 @@ bool possibleLineFound()
 
 bool hasLineBeenFound()
 {
-	for (uint8_t attempt = 0; attempt < 3; attempt++)
+	for (uint8_t attempt = 0; attempt < 4; attempt++)
 	{		
 		if (possibleLineFound() == false)
 		{
 			return false;
 		}
-		_delay_ms(6);
+		_delay_ms(1);
 	}
 
 	return true;

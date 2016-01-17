@@ -76,11 +76,11 @@ float calcFloorErrorAndFlagControl()
 			return 0;
 		}
 	}
-
-	if((data == 0b01111111) || (data == 0b01110111))
-	{
-		setStopFlag(1);
-	}
+	// STOPS ON LINE WHEN ALL ONE (INTERFERES WITH OBSTACLE AVOIDER)
+	//if((data == 0b01111111) || (data == 0b01110111))
+	//{
+		//setStopFlag(1);
+	//}
 
 	if(getFoundLineFlag())
 	{
