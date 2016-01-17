@@ -66,14 +66,12 @@ volatile uint8_t sensorUpdateFlag = 0;
 
 // Clear the interger sum Error
 void clearIntSumError(){
-
 	intL = 0;
 	intR = 0;	
 }
 
 // Initialize the motor control.
 void initMotorControl(void){
-
 	// Set the directions.
 	setOutput(DDRD, BRIDGE_A1);
 	setOutput(DDRD, BRIDGE_A2);

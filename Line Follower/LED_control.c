@@ -97,18 +97,6 @@ void LEDDisable(){
 	setHigh(PORTC, LED_OE);
 }
 
-// Turn LCD backlight on
-void LEDLcdBackLightOn(){
-	ledBank1 |= 0b00000001;
-	LEDUpdate();
-}
-
-// Turn LCD backlight off
-void LEDLcdBackLightOff(){
-	ledBank1 &= 0b11111110;
-	LEDUpdate();
-}
-
 /*
 Change LED on/off. 
 ledBank0 is LED voltage meter (red1,red2,green1...green6)
@@ -131,21 +119,6 @@ void LEDChangeLed(uint8_t bank, uint8_t data){
 		ledBank1 = data;
 	}
 	LEDUpdate();
-}
-
-// Set all Red LED on
-void setRed(){
-	LEDChangeLed(1,124);
-}
-
-// Set all Green LED on
-void setGreen(){
-	LEDChangeLed(1,186);
-}
-
-// Set all Blue LED on
-void setBlue(){
-	LEDChangeLed(1,214);
 }
 
 // Set all LED off
@@ -186,19 +159,6 @@ void LEDVoltage(){
 		LEDChangeLed(0,0);
 	}
 	LEDUpdate();
-}
-
-// Rainbow effect, fades from red to green to blue and back to red and loop
-// Uses the Timer/counter2, 4 bit PWM. Runs until rainBowOff().
-// Uses the changeColor() and calcPWM() functions.
-void rainBowOn(){
-	// Enable Compare Match interrupt.
-	TIMSK |= 128;
-}
-
-void rainBowOff(){
-	TIMSK &= ~128;
-	allOff();
 }
 
 void changeColor(){

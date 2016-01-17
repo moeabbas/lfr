@@ -39,7 +39,6 @@ SUBDIRS :=
 C_SRCS +=  \
 ../ADC.c \
 ../AdvancedMotorControl.c \
-../bluetooth.c \
 ../buttonMenu.c \
 ../Floor_sensor.c \
 ../lcd.c \
@@ -47,8 +46,7 @@ C_SRCS +=  \
 ../Logic.c \
 ../main.c \
 ../motor_control.c \
-../ObstacleAvoider.c \
-../Wall_sensor.c
+../ObstacleAvoider.c
 
 
 PREPROCESSING_SRCS += 
@@ -60,7 +58,6 @@ ASM_SRCS +=
 OBJS +=  \
 ADC.o \
 AdvancedMotorControl.o \
-bluetooth.o \
 buttonMenu.o \
 Floor_sensor.o \
 lcd.o \
@@ -68,13 +65,11 @@ LED_control.o \
 Logic.o \
 main.o \
 motor_control.o \
-ObstacleAvoider.o \
-Wall_sensor.o
+ObstacleAvoider.o
 
 OBJS_AS_ARGS +=  \
 ADC.o \
 AdvancedMotorControl.o \
-bluetooth.o \
 buttonMenu.o \
 Floor_sensor.o \
 lcd.o \
@@ -82,13 +77,11 @@ LED_control.o \
 Logic.o \
 main.o \
 motor_control.o \
-ObstacleAvoider.o \
-Wall_sensor.o
+ObstacleAvoider.o
 
 C_DEPS +=  \
 ADC.d \
 AdvancedMotorControl.d \
-bluetooth.d \
 buttonMenu.d \
 Floor_sensor.d \
 lcd.d \
@@ -96,13 +89,11 @@ LED_control.d \
 Logic.d \
 main.d \
 motor_control.d \
-ObstacleAvoider.d \
-Wall_sensor.d
+ObstacleAvoider.d
 
 C_DEPS_AS_ARGS +=  \
 ADC.d \
 AdvancedMotorControl.d \
-bluetooth.d \
 buttonMenu.d \
 Floor_sensor.d \
 lcd.d \
@@ -110,8 +101,7 @@ LED_control.d \
 Logic.d \
 main.d \
 motor_control.d \
-ObstacleAvoider.d \
-Wall_sensor.d
+ObstacleAvoider.d
 
 OUTPUT_FILE_PATH +=Line\ Follower.elf
 
@@ -135,13 +125,6 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./AdvancedMotorControl.o: .././AdvancedMotorControl.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-./bluetooth.o: .././bluetooth.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
@@ -198,13 +181,6 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./ObstacleAvoider.o: .././ObstacleAvoider.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-./Wall_sensor.o: .././Wall_sensor.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

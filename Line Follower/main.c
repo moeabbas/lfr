@@ -7,8 +7,6 @@
 #include "LED_control.h"
 #include "Logic.h"
 #include "ADC.h"
-#include "Wall_sensor.h"
-#include "bluetooth.h"
 #include "buttonMenu.h"
 #include "ObstacleAvoider.h"
 #include "AdvancedMotorControl.h"
@@ -31,7 +29,7 @@ void Initialize();
 int main(void) {
 
 	Initialize();
-	//LEDVoltage();
+	LEDVoltage();
 	buttonMenu();
 
 	while(1)
@@ -65,7 +63,6 @@ void Initialize()
 	LCDInit(16);
 	LEDInit();
 	AdcInit();
-	USARTInit(31);
 	LEDEnable();
 	enableHBridge();
 	SetInterrupt();

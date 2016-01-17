@@ -166,18 +166,6 @@ void buttonMenu(void)
 	lastButton = button;
 
 }
-bool buttonPressed(void)
-{
-	char button = getButton();
-	if(button != noButton)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
 bool buttonReleased(void)
 {
 	char button = getButton();
@@ -263,19 +251,6 @@ void subMenuUp(void)
 			LcdTask();
 			LCDGotoXY(15,0);
 			LCDPutChar(' ');	// 0x20 using empty char blanks the up arrow
-		}
-		else if(subButton == downButton)
-		{
-			while(!buttonReleased())
-			{
-				// do nothing
-			};
-			setRunWallFlag(true);
-			setRunLineFlag(false);
-			sprintf(menuStr2,"RunWall()");
-			LcdTask();
-			LCDGotoXY(15,1);
-			LCDPutChar(' ');	// 0x20 using empty char blanks the down arrow
 		}
 	}
 }

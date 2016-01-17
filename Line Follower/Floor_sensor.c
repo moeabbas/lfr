@@ -23,7 +23,6 @@
 
 // Initialize the Floor Sensor.
 void initFloorSensor(){
-
 	// Set the directions.
 	setInput(DDRB, L3);
 	setInput(DDRB, L2);
