@@ -23,14 +23,9 @@
 //                       Local variables                               //
 /////////////////////////////////////////////////////////////////////////
 
-
-
-
-
 uint8_t stopFlag = FLAG_NOT_SET;
 uint8_t foundLineFlag = FLAG_NOT_SET;
 uint8_t lostLineFlag = FLAG_NOT_SET;
-
 
 /////////////////////////////////////////////////////////////////////////
 //                       Public functions                              //
@@ -131,6 +126,9 @@ void runLine(){
 				foundLineFlag = FLAG_USED;
 			}
 		
+			// When following the line,
+			// if front sensor detects obstacle,
+			// exit line following loop
 			if (foundLineFlag == FLAG_USED)
 			{
 				uint16_t distance = AdcConvert(1);
@@ -154,7 +152,7 @@ void runLine(){
 }
 
 // Drive the Robot certain distance or turn left/right
-// dist = 1100 aprox 360°
+// dist = 1100 approx 360°
 // direction = 0 Straight, 1 Left, 2 Right
 // ref = 0-17 Speed.
 // Does not compensate for overshoot, slow speed better.

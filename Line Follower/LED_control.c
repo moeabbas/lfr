@@ -16,20 +16,6 @@
 #include "ADC.h"
 
 /////////////////////////////////////////////////////////////////////////
-//                       Local variables                               //
-/////////////////////////////////////////////////////////////////////////
-
-uint8_t ledBank0 = 0;
-uint8_t ledBank1 = 254;
-uint8_t RGB[2][3] = {{0}};
-
-// Counter for the PWM 0-15
-volatile uint8_t pwm = 0;
-
-// Counter for the update interval for the LED's
-volatile uint8_t counter = 0;
-
-/////////////////////////////////////////////////////////////////////////
 //                       Public functions                              //
 /////////////////////////////////////////////////////////////////////////
 
@@ -70,7 +56,7 @@ void LEDInit(void){
 	OCR2 = 25;	// Counter divisor 78.125 Hz/25 = 3005 Hz 
 
 	// Update, set all Led's off
-	LEDUpdate();
+	LEDUpdate(0);
 }
 
 //Send data through SPI
@@ -80,9 +66,8 @@ void LEDWrite(uint8_t data){
 }
 
 // Send new values to shift registers.
-void LEDUpdate(){
+void LEDUpdate(uint8_t ledBank0){
 	setLow(PORTB, SPI_SS);
-	LEDWrite(ledBank1);
 	LEDWrite(ledBank0);
 	setHigh(PORTB, SPI_SS);
 }
@@ -97,223 +82,36 @@ void LEDDisable(){
 	setHigh(PORTC, LED_OE);
 }
 
-/*
-Change LED on/off. 
-ledBank0 is LED voltage meter (red1,red2,green1...green6)
-ledBank1 is LCD backlight(0) extra outputs(1-7)
-
-Color		dec		bit
------------------------
-Red left	126		1
-Red right	252		7
-Green left	250		2
-Green right	190		6
-Blue left	246		3
-blue right	222		5 */
-
-void LEDChangeLed(uint8_t bank, uint8_t data){
-	if(bank == 0){
-		ledBank0 = data;
-	}
-	if(bank == 1){
-		ledBank1 = data;
-	}
-	LEDUpdate();
-}
-
-// Set all LED off
-void allOff(){
-	LEDChangeLed(1,254);
-}
-
 // Get a ADC value for battery and decode for Led's 
 void LEDVoltage(){
 	
 	int ADCValue = AdcConvert(3);
 
 	if(ADCValue >= 845){
-		LEDChangeLed(0,255);
+		LEDUpdate(255);
 	}
 	else if(815<=ADCValue){
-		LEDChangeLed(0,127);
+		LEDUpdate(127);
 	}
 	else if(779<=ADCValue){
-		LEDChangeLed(0,63);
+		LEDUpdate(63);
 	}
 	else if(745<=ADCValue){
-		LEDChangeLed(0,31);
+		LEDUpdate(31);
 	}
 	else if(710<=ADCValue){
-		LEDChangeLed(0,15);
+		LEDUpdate(15);
 	}
 	else if(680<=ADCValue){
-		LEDChangeLed(0,7);
+		LEDUpdate(7);
 	}
 	else if(644<=ADCValue){
-		LEDChangeLed(0,3);
+		LEDUpdate(3);
 	}
 	else if(607<=ADCValue){
-		LEDChangeLed(0,1);
+		LEDUpdate(1);
 	}
 	else{
-		LEDChangeLed(0,0);
+		LEDUpdate(0);
 	}
-	LEDUpdate();
-}
-
-void changeColor(){
-
-	static volatile uint8_t red = 0;
-	static volatile uint8_t green = 0;
-	static volatile uint8_t blue = 0;
-	static volatile uint8_t color = 0;
-
-	switch(color){
-
-		// First step, add Red, only once.
-		case 0:
-		if(red != 15){
-			red++;
-			break;
-		}else{
-			color = 1;	
-		}
-			
-		// Add Green
-		case 1:
-		if(green != 15){
-			green++;
-			break;
-		}else{
-			color = 2;
-			break;
-		}
-		
-		// Remove Red
-		case 2:
-		if(red != 0){
-			red--;
-			break;
-		}else{
-			color = 3;
-			break;
-		}
-
-		// Add blue
-		case 3:
-		if(blue != 15){
-			blue++;
-			break;
-		}else{
-			color = 4;
-			break;
-		}
-
-		// Remove Green
-		case 4:
-		if(green != 0){
-			green--;
-			break;
-		}else{
-			color = 5;
-			break;
-		}
-		
-		// Add Red
-		case 5:
-		if(red != 15){
-			red++;
-			break;
-		}else{
-			color = 6;
-			break;
-		}
-		
-		// Remove blue
-		case 6:
-		if(blue != 0){
-			blue--;
-			break;
-		}else{
-			color = 1;
-			break;
-		}
-	}
-
-	RGB[0][0] = red;
-	RGB[1][0] = red;
-	RGB[0][1] = green;
-	RGB[1][1] = green;
-	RGB[0][2] = blue;
-	RGB[1][2] = blue;
-}
-
-// Set the duty cycle for the leds
-void calcPWM(){
-
-	// Red Left
-	if(RGB[0][0] <= pwm){
-		ledBank1 |= (1<<1); //off
-	}else{
-		ledBank1 &= ~(1<<1); //on
-	}
-	
-	// Green Left
-	if(RGB[0][1] <= pwm){
-		ledBank1 |= (1<<2);
-	}else{
-		ledBank1 &= ~(1<<2);
-	}
-
-	// Blue Left
-	if(RGB[0][2] <= pwm){
-		ledBank1 |= (1<<3);
-	}else{
-		ledBank1 &= ~(1<<3);
-	}
-	
-	// Red Right
-	if(RGB[1][0] <= pwm){
-		ledBank1 |= (1<<7);
-	}else{
-		ledBank1 &= ~(1<<7);
-	}
-
-	// Green Right
-	if(RGB[1][1] <= pwm){
-		ledBank1 |= (1<<6);
-	}else{
-		ledBank1 &= ~(1<<6);
-	}
-
-	// Blue Right
-	if(RGB[1][2] <= pwm){
-		ledBank1 |= (1<<5);
-	}else{
-		ledBank1 &= ~(1<<5);
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////
-//                       Interrupt service routines                    //
-/////////////////////////////////////////////////////////////////////////
-
-ISR(TIMER2_COMP_vect){
-
-	// PWM  count 0-15
-	pwm++;
-	if(pwm > 15){
-		pwm = 0;
-	}
-	
-	// Set new values for LED's
-	counter++;
-	if(counter == 100){
-		counter = 0;
-		changeColor();
-	}	
-
-	// Update all LED's
-	calcPWM();
-	LEDUpdate();
 }

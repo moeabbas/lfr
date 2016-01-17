@@ -135,7 +135,6 @@ float calcFloorErrorAndFlagControl()
 	return 0;
 }
 
-
 // Writes on display floor sensor values in Binary and dec
 void showFloorInfo(uint8_t data){
 

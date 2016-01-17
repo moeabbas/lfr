@@ -233,19 +233,18 @@ void calcDuty(uint16_t ref, float error){
 	}
 	else{
 		windL = 1;
-	}			
+	}
 
 	if((dutyR >=250) || (dutyR < 0)){
 		windR = 0;
 	}
 	else{
 		windR = 1;
-	}	
+	}
 
 	// Calculate integration sum.
 	intL = intL + errorL*T*windL;
 	intR = intR + errorR*T*windR;
-
 
 	// Calculate new DutyCycle values.
 	// *12.5 to transform from pulses to DutyCycle
@@ -257,7 +256,6 @@ void calcDuty(uint16_t ref, float error){
 
 	// Show 
 	showMotorInfo();
-
 }
 
 void setKp(float value){

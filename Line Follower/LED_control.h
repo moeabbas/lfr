@@ -22,8 +22,9 @@ void LEDInit(void);
 //Send data through SPI
 void LEDWrite(uint8_t data);
 
+// Change LED on/off for LED voltage meter.
 // Send new values to shift registers.
-void LEDUpdate();
+void LEDUpdate(uint8_t data);
 
 // Enable All Leds
 void LEDEnable();
@@ -31,17 +32,5 @@ void LEDEnable();
 // Disable All Leds
 void LEDDisable();
 
-// Change LED on/off. 
-// ledBank0 is LED voltage meter 
-// ledBank1 is LCD backlight(0) extra outputs(1-7)
-void LEDChangeLed(uint8_t bank, uint8_t data);
-
-// Set all LED off
-void allOff();
-
 // Get a ADC value for battery and decode for Led's 
 void LEDVoltage();
-
-//Rainbow effect
-void changeColor();
-void calcPWM();
